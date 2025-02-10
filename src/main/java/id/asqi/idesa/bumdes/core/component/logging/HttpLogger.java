@@ -20,6 +20,26 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/*
+* HTTP Logger
+* Author: Abyan Falah
+*
+*   - Logs all incoming requests and outgoing responses
+*   - Can log both JSON and Multipart Form Data requests
+*   - Logs the following:
+*       - URI
+*       - Username
+*       - IP
+*       - Params
+*       - Request Body
+*       - Response Body
+*       - Elapsed time
+*
+*   - File will NOT be logged (will be replaced with "[Binary file]")
+*   - Authentication endpoints will not be logged
+*
+* */
+
 @Component
 @Slf4j
 public class HttpLogger extends OncePerRequestFilter {
