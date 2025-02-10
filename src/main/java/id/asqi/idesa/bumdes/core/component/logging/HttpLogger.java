@@ -88,7 +88,6 @@ public class HttpLogger extends OncePerRequestFilter {
 		}
 	}
 
-
 	private void logJsonRequest (ContentCachingRequestWrapper wrappedRequest, ContentCachingResponseWrapper wrappedResponse, FilterChain filterChain) throws ServletException, IOException {
 		long start = System.currentTimeMillis();
 		try {
@@ -124,7 +123,6 @@ public class HttpLogger extends OncePerRequestFilter {
 		}
 	}
 
-
 	private Boolean isFileResponse (ContentCachingResponseWrapper wrappedResponse) {
 		return wrappedResponse.getContentType().contains("image") || wrappedResponse.getContentType().contains("pdf") || wrappedResponse.getContentType().contains("octet-stream");
 	}
@@ -135,7 +133,6 @@ public class HttpLogger extends OncePerRequestFilter {
 		for (Part part : parts) {
 			String partName = part.getName();
 			String partValue = null;
-
 
 			boolean isText = part.getContentType() == null;
 			if (isText) {
@@ -150,7 +147,7 @@ public class HttpLogger extends OncePerRequestFilter {
 					e.printStackTrace();
 				}
 			} else {
-				partValue = "[inary file]";
+				partValue = "[Binary file]";
 			}
 
 			logMessage.append(partName).append(" : ").append(partValue).append(", ");
