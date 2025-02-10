@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 @Slf4j
@@ -35,14 +37,23 @@ public class HttpLogger extends OncePerRequestFilter {
 		ContentCachingRequestWrapper wrappedRequest = new ContentCachingRequestWrapper(request);
 		ContentCachingResponseWrapper wrappedResponse = new ContentCachingResponseWrapper(response);
 
-		boolean isMultipartFormData = wrappedRequest.getContentType().contains(MediaType.MULTIPART_FORM_DATA_VALUE);
-		if (isMultipartFormData) {
+		if (getIsMultipartFormData(wrappedRequest)) {
 			this.logFormDataRequest(wrappedRequest, wrappedResponse, filterChain);
 		} else {
 			this.logJsonRequest(wrappedRequest, wrappedResponse, filterChain);
 		}
 
 		wrappedResponse.copyBodyToResponse();
+	}
+
+	private boolean getIsMultipartFormData (HttpServletRequest request) {
+		String contentType = request.getContentType();
+
+		if (contentType == null) {
+			return false;
+		}
+
+		return request.getContentType().contains(MediaType.MULTIPART_FORM_DATA_VALUE);
 	}
 
 	private void logFormDataRequest (ContentCachingRequestWrapper wrappedRequest, ContentCachingResponseWrapper wrappedResponse, FilterChain filterChain) throws ServletException, IOException {
@@ -53,14 +64,27 @@ public class HttpLogger extends OncePerRequestFilter {
 		} finally {
 			long elapsed = System.currentTimeMillis() - start;
 			String username = "[unavailable]", ip, requestBody, responseBody;
+			String paramString = this.getParams(wrappedRequest.getParameterMap());
 			ip = wrappedRequest.getRemoteAddr();
+
 			Collection<Part> parts = wrappedRequest.getParts();
 			requestBody = this.compileLogMessage(parts);
 			responseBody = new String(wrappedResponse.getContentAsByteArray());
+
 			if (wrappedRequest.getUserPrincipal() != null) {
 				username = wrappedRequest.getUserPrincipal().getName();
 			}
-			writeLog(wrappedRequest.getMethod(), wrappedRequest.getRequestURI(), elapsed, username, ip, requestBody, responseBody);
+
+			writeLog(
+					wrappedRequest.getMethod(),
+					wrappedRequest.getRequestURI(),
+					elapsed,
+					username,
+					ip,
+					requestBody,
+					responseBody,
+					paramString
+			);
 		}
 	}
 
@@ -72,15 +96,37 @@ public class HttpLogger extends OncePerRequestFilter {
 		} finally {
 			long elapsed = System.currentTimeMillis() - start;
 			String username = "[unavailable]", ip, requestBody, responseBody;
+			String paramString = this.getParams(wrappedRequest.getParameterMap());
+
 			ip = wrappedRequest.getRemoteAddr();
 			requestBody = new String(wrappedRequest.getContentAsByteArray());
-			responseBody = new String(wrappedResponse.getContentAsByteArray());
+
+			if (this.isFileResponse(wrappedResponse)) {
+				responseBody = "-- [Binary file] --";
+			} else {
+				responseBody = new String(wrappedResponse.getContentAsByteArray());
+			}
+
 			if (wrappedRequest.getUserPrincipal() != null) {
 				username = wrappedRequest.getUserPrincipal().getName();
 			}
 
-			writeLog(wrappedRequest.getMethod(), wrappedRequest.getRequestURI(), elapsed, username, ip, requestBody, responseBody);
+			writeLog(
+					wrappedRequest.getMethod(),
+					wrappedRequest.getRequestURI(),
+					elapsed,
+					username,
+					ip,
+					requestBody,
+					responseBody,
+					paramString
+			);
 		}
+	}
+
+
+	private Boolean isFileResponse (ContentCachingResponseWrapper wrappedResponse) {
+		return wrappedResponse.getContentType().contains("image") || wrappedResponse.getContentType().contains("pdf") || wrappedResponse.getContentType().contains("octet-stream");
 	}
 
 	private String compileLogMessage (Collection<Part> parts) {
@@ -104,7 +150,7 @@ public class HttpLogger extends OncePerRequestFilter {
 					e.printStackTrace();
 				}
 			} else {
-				partValue = "[binary file]";
+				partValue = "[inary file]";
 			}
 
 			logMessage.append(partName).append(" : ").append(partValue).append(", ");
@@ -113,12 +159,22 @@ public class HttpLogger extends OncePerRequestFilter {
 		return logString.substring(0, logString.length() - 2);
 	}
 
-	private void writeLog(String method, String uri, long elapsed, String username, String ip, String requestBody, String responseBody){
+	private String getParams (Map<String, String[]> params) {
+		String paramString = params.entrySet()
+				.stream()
+				.map(entry -> entry.getKey() + " : " + String.join(",", entry.getValue()))
+				.collect(Collectors.joining(", "));
+		return "{" + paramString + "}";
+	}
+
+	private void writeLog(String method, String uri, long elapsed, String username, String ip, String requestBody, String responseBody,
+	String paramString){
 		log.info("""
 
 								URI          : [{}] {} - {} ms
 								Username     : {}
 								IP           : {}
+								Params       : {}
 								RequestBody  : {}
 								ResponseBody : {}
 							--------------------------------------------------------------------------------------------------------------------------------
@@ -128,6 +184,7 @@ public class HttpLogger extends OncePerRequestFilter {
 				elapsed,
 				username,
 				ip,
+				paramString,
 				requestBody,
 				responseBody
 		);
