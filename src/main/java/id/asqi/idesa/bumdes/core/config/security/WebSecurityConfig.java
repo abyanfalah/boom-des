@@ -60,11 +60,13 @@ public class WebSecurityConfig {
 
 		http.authorizeHttpRequests(
 				auth -> auth
+						.requestMatchers("/").permitAll()
 						.requestMatchers("/api/v1/auth/register").permitAll()
 
 						.requestMatchers("/api/v1/auth/login").permitAll()
 						.requestMatchers("/api/test/**").permitAll()
-						.anyRequest().authenticated()
+//						.anyRequest().authenticated()
+						.anyRequest().permitAll()
 		);
 
 		http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
