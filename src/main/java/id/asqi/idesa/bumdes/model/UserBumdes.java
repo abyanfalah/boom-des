@@ -1,18 +1,16 @@
 package id.asqi.idesa.bumdes.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
+// User Bumdes
 @Entity
+@Table(name = "user_bumdes")
 @Getter
 @Setter
-@NoArgsConstructor
-@Table(name = "user_bumdes")
 public class UserBumdes {
 
 	@Id
@@ -22,21 +20,23 @@ public class UserBumdes {
 	@Column(name = "username")
 	private String username;
 
-	@Column(name = "password")
+	@Column(name = "password") // Consider encrypting password!
 	private String password;
 
 	@Column(name = "alamat")
 	private String alamat;
 
-	@Column(name = "jabatan_id")
-	private String jabatanId;
+	@ManyToOne
+	@JoinColumn(name = "jabatan_id")
+	private Jabatan jabatan;
 
 	@Column(name = "tanggal_dibuat")
-	private String tanggalDibuat;
+	private LocalDateTime tanggalDibuat;
 
 	@Column(name = "tanggal_diubah")
-	private String tanggalDiubah;
+	private LocalDateTime tanggalDiubah;
 
 	@Column(name = "foto_profil")
 	private String fotoProfil;
+
 }

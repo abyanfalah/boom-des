@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BumdesApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BumdesApplication.class, args);
-		System.out.println("MELEDACC \uD83D\uDCA3 \uD83D\uDCA3 \uD83D\uDCA3");
+		System.out.println("MELEDACC \uD83C\uDF49 \uD83C\uDF49 \uD83C\uDF49");
 	}
 
 }
