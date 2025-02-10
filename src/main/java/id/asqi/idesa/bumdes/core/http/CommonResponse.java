@@ -3,6 +3,7 @@ package id.asqi.idesa.bumdes.core.http;
 
 import id.asqi.idesa.bumdes.core.Constants;
 import id.asqi.idesa.bumdes.core.http.response.AuthResponse;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.data.domain.Page;
 import org.springframework.http.*;
 import org.springframework.validation.Errors;
@@ -121,9 +122,12 @@ public class CommonResponse {
 	}
 
 	public static <T> ResponseEntity<Response<T>> serverError (Exception e) {
-		Response<T> r = new Response<>(); r.setResponseCode(ResponseCode.SERVER_ERROR); if (showError) {
+		Response<T> r = new Response<>(); r.setResponseCode(ResponseCode.SERVER_ERROR);
+		if (showError) {
 			r.setMessage(e.getMessage());
-		} return ResponseEntity.ok(r);
+			r.setLocation(getErrorLocation(e));
+		}
+		return ResponseEntity.ok(r);
 	}
 
 	public static <T> ResponseEntity<Response<T>> serverError (String message) {
@@ -195,5 +199,10 @@ public class CommonResponse {
 		Response<?> r = new Response<>(); r.setCode(0); r.setMessage(message); return ResponseEntity.ok(r);
 	}
 
+
+	private static String getErrorLocation (Exception e) {
+		StackTraceElement element = e.getStackTrace()[0];
+		return element.getClassName() + "." + element.getMethodName() + "():" + element.getLineNumber() + " (for dev purpose only)";
+	}
 
 }
