@@ -27,8 +27,6 @@ public class AuthService {
 
 	public UserDetailsImpl authenticate (@Valid @RequestBody AuthRequest.Login req) {
 		UserBumdes user = userRepository.findByUsername(req.getUsername()).orElseThrow(() -> new BadCredentialsException("Hoho hihe: Badcredent"));
-		Boolean isCorrectPassword = passwordEncoder.matches(req.getPassword(), user.getPassword());
-
 		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), req.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		return UserDetailsImpl.build(user);
