@@ -15,7 +15,8 @@ public class ErrorLogger {
 		String logString = """
 				    
 				Error Message: "[message]"
-				Error stack trace --------------------------------------------------------------------------------------------------------------
+				Location: [location]
+				Simplified error stack trace --------------------------------------------------------------------------------------------------------------
 				[stackTrace]
 				""";
 
@@ -27,11 +28,15 @@ public class ErrorLogger {
 			}
 		}
 
+		StackTraceElement element = e.getStackTrace()[0];
+		String location = element.getClassName() + "." + element.getMethodName() + "():" + element.getLineNumber();
+
 		logString = logString.replace("[message]", e.getClass().getSimpleName() + ": " + e.getMessage());
 		logString = logString.replace("[stackTrace]", stackTraceString);
+		logString = logString.replace("[location]", location);
 		log.error(logString);
 
-		/*not logged into file*/
+		// not logged to file
 		System.err.println(logString);
 	}
 

@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.antlr.v4.runtime.misc.NotNull;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,33 +30,12 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
 	private final JwtUserDetailService jwtUserDetailService;
 	private final EnvService envService;
 
-	private final List<String> authEndpoints = List.of(
-			"/api/auth/login",
-			"/api/auth/logout"
-	);
-
-	private boolean isAuthEndpoint (HttpServletRequest request) {
-		return authEndpoints.contains(
-				request.getRequestURI()
-		);
-	}
-
 	@Override
 	protected void doFilterInternal (
-			@NotNull HttpServletRequest request,
+			HttpServletRequest request,
 			@NotNull HttpServletResponse response,
 			@NotNull FilterChain filterChain)
 			throws ServletException, IOException {
-
-		/*disabled. figured it out.
-		 * now using just WebSecurityConfig
-		 * for the business
-		 * */
-//		/*bypass auth check*/
-//		if (isAuthEndpoint(request)) {
-//			filterChain.doFilter(request, response);
-//			return;
-//		}
 
 		String username;
 		String jwt;
@@ -82,17 +61,17 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
 		}
 
 		username = jwtUtils.extractUsername(jwt);
-		if (username == null || username.isBlank() || SecurityContextHolder.getContext().getAuthentication() != null) {
+		if (username == null || username.isBlank() || SecurityContextHolder.getContext().getAuthentication() == null) {
 			filterChain.doFilter(request, response);
 			return;
 		}
 
-		UserDetails user = jwtUserDetailService.loadUserByUsername(username);
+		UserDetails userDetails = jwtUserDetailService.loadUserByUsername(username);
 
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-				user,
+				userDetails,
 				null,
-				null
+				userDetails.getAuthorities()
 		);
 
 		authenticationToken.setDetails(

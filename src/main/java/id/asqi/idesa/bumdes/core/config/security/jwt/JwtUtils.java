@@ -1,5 +1,6 @@
 package id.asqi.idesa.bumdes.core.config.security.jwt;
 
+import id.asqi.idesa.bumdes.core.auth.UserDetailsImpl;
 import id.asqi.idesa.bumdes.core.service.EnvService;
 import id.asqi.idesa.bumdes.model.UserBumdes;
 import io.jsonwebtoken.*;
@@ -19,7 +20,7 @@ public class JwtUtils {
   private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
   private final EnvService envService;
 
-  public String generateJwt(UserBumdes user) {
+  public String generateJwt(UserDetailsImpl user) {
     return Jwts.builder()
         .setSubject((user.getUsername()))
         .setIssuedAt(new Date())
@@ -35,11 +36,6 @@ public class JwtUtils {
   public String extractUsername(String jwt) {
     return Jwts.parserBuilder().setSigningKey(key()).build()
                .parseClaimsJws(jwt).getBody().getSubject();
-  }
-
-  private Key getSigningKey() {
-    byte[] keyBytes = Decoders.BASE64.decode(envService.jwtSecret);
-    return Keys.hmacShaKeyFor(keyBytes);
   }
 
 

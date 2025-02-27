@@ -1,6 +1,7 @@
 package id.asqi.idesa.bumdes.core.http;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import id.asqi.idesa.bumdes.core.http.ResponseCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.domain.Page;
@@ -9,7 +10,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-@Getter @Setter
+@Getter
+@Setter
 public class Response<D> {
     private Integer code = 0;
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -24,8 +26,8 @@ public class Response<D> {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Object validation;
 
-//	 -=========
 
+    /*pagination*/
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Long total;
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -40,19 +42,19 @@ public class Response<D> {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private D data;
 
-    public void setResponseCode(ResponseCode responseCode){
+    public void setResponseCode (ResponseCode responseCode) {
         this.code = responseCode.getCode();
         this.message = responseCode.getMessage();
     }
 
-    public void setData(D data){
-        if(data instanceof List<?>){
+    public void setData (D data) {
+        if (data instanceof List<?>) {
             this.total = (long) ((List<?>) data).size();
         }
         this.data = data;
     }
 
-    public void setData(Page<?> pageData, Object dataDtoList){
+    public void setData (Page<?> pageData, Object dataDtoList) {
         this.data = (D) dataDtoList;
         this.total = pageData.getTotalElements();
         this.showing = pageData.getNumberOfElements();
@@ -60,7 +62,7 @@ public class Response<D> {
         this.currentPage = pageData.getPageable().getPageNumber() + 1;
     }
 
-    public void setPageData(Page<?> pageData){
+    public void setPageData (Page<?> pageData) {
         this.data = (D) pageData.getContent();
         this.total = pageData.getTotalElements();
         this.showing = pageData.getNumberOfElements();
@@ -68,7 +70,6 @@ public class Response<D> {
         this.currentPage = pageData.getPageable().getPageNumber() + 1;
 
     }
-
 
 
 }

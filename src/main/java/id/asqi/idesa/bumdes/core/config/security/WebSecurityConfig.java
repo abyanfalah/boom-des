@@ -61,12 +61,18 @@ public class WebSecurityConfig {
 		http.authorizeHttpRequests(
 				auth -> auth
 						.requestMatchers("/").permitAll()
-						.requestMatchers("/api/v1/auth/register").permitAll()
 
-						.requestMatchers("/api/v1/auth/login").permitAll()
-						.requestMatchers("/api/test/**").permitAll()
-//						.anyRequest().authenticated()
-						.anyRequest().permitAll()
+						/*auth*/
+						.requestMatchers("/auth/register").permitAll()
+						.requestMatchers("/auth/login").permitAll()
+
+						/*test*/
+						.requestMatchers("/test/**").permitAll()
+						.requestMatchers("/test").permitAll()
+						.requestMatchers("/test/principal").authenticated()
+
+						.anyRequest().authenticated()
+//						.anyRequest().permitAll()
 		);
 
 		http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
@@ -78,7 +84,6 @@ public class WebSecurityConfig {
 
 		/*uses jwtAuthTokenFilter AFTER UsernamePasswordAuthenticationFilter*/
 		http.addFilterAfter(jwtAuthTokenFilter, UsernamePasswordAuthenticationFilter.class);
-
 
 		return http.build();
 	}

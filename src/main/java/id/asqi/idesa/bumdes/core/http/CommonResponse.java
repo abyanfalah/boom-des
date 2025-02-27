@@ -217,6 +217,18 @@ public class CommonResponse {
 		return ResponseEntity.ok(r);
 	}
 
+	public static <T> ResponseEntity<Response<T>> badRequest (Exception e) {
+		Response<T> r = new Response<>();
+		r.setCode(400);
+		if (showError) {
+			r.setMessage(e.getMessage());
+			r.setLocation(getErrorLocation(e));
+		}
+		return ResponseEntity.ok(r);
+	}
+
+
+
 	public static <T> ResponseEntity<Response<T>> noEndpoint (String message) {
 
 		Response<T> r = new Response<>();

@@ -19,6 +19,4 @@ public class AuthResponse {
 	private String roleString;
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private Integer isActive;
-
-
 }

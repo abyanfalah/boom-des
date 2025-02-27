@@ -1,5 +1,6 @@
 package id.asqi.idesa.bumdes.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +21,8 @@ public class UserBumdes {
 	@Column(name = "username")
 	private String username;
 
-	@Column(name = "password") // Consider encrypting password!
+	@JsonIgnore
+	@Column(name = "password")
 	private String password;
 
 	@Column(name = "alamat")
