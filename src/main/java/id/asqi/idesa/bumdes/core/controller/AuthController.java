@@ -8,12 +8,14 @@ import id.asqi.idesa.bumdes.core.http.Response;
 import id.asqi.idesa.bumdes.core.http.request.AuthRequest;
 import id.asqi.idesa.bumdes.core.http.response.AuthResponse;
 import id.asqi.idesa.bumdes.core.service.AuthService;
-import id.asqi.idesa.bumdes.model.UserBumdes;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("auth")
@@ -29,7 +31,6 @@ public class AuthController {
 	) {
 		UserDetailsImpl userBumdes = authService.authenticate(req);
 
-
 		String jwt = jwtUtils.generateJwt(userBumdes);
 		AuthResponse response = AuthResponse.builder()
 				.id(userBumdes.getId())
@@ -39,5 +40,13 @@ public class AuthController {
 
 		authService.setCookie(servletResponse, jwt);
 		return CommonResponse.authResponse(response);
+	}
+
+	@PostMapping("logout")
+	public ResponseEntity<Response<Void>> logout(
+			HttpServletResponse servletResponse
+	) {
+		authService.setCookieLogout(servletResponse);
+		return CommonResponse.success("Logout Success");
 	}
 }

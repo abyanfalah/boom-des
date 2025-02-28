@@ -67,9 +67,10 @@ public class WebSecurityConfig {
 						.requestMatchers("/auth/login").permitAll()
 
 						/*test*/
-						.requestMatchers("/test/**").permitAll()
+//						.requestMatchers("/test/**").permitAll()
 						.requestMatchers("/test").permitAll()
 						.requestMatchers("/test/principal").authenticated()
+						.requestMatchers("/test/protected").permitAll()
 
 						.anyRequest().authenticated()
 //						.anyRequest().permitAll()

@@ -5,12 +5,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 public class Auth {
 	public static UserBumdes getUserBumdes() {
-		return (UserBumdes) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		return  (UserBumdes) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	}
 
 	public static Long id () {
 		return getUserBumdes().getId();
 	}
+
 	public static String username () {
 		return getUserBumdes().getUsername();
 	}

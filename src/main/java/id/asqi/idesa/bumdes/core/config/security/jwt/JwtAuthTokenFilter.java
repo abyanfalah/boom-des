@@ -10,7 +10,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -61,7 +63,7 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
 		}
 
 		username = jwtUtils.extractUsername(jwt);
-		if (username == null || username.isBlank() || SecurityContextHolder.getContext().getAuthentication() == null) {
+		if (username == null || username.isBlank()) {
 			filterChain.doFilter(request, response);
 			return;
 		}

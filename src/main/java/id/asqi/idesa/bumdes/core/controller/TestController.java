@@ -10,12 +10,16 @@ import id.asqi.idesa.bumdes.model.UserBumdes;
 import id.asqi.idesa.bumdes.repository.JabatanRepository;
 import id.asqi.idesa.bumdes.repository.UserBumdesRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.Map;
 
@@ -46,6 +50,24 @@ public class TestController {
 	public Object testPrincipal () {
 		return Auth.getUserBumdes();
 	}
+
+	@GetMapping("protected")
+	public Object testProtected (Principal principal) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null && authentication.isAuthenticated()) {
+			System.out.println("Authentication: " + authentication);
+			System.out.println("Principal: " + principal);
+			if(authentication.getPrincipal() instanceof UserDetails){
+				UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+				System.out.println("UserDetails: " + userDetails);
+			}
+
+			return "Authenticated!";
+		} else {
+			return "Unauthenticated";
+		}
+	}
+
 
 	@GetMapping("generate-password")
 	public Object generatePassword (@RequestBody String rawPassword) {

@@ -25,8 +25,10 @@ public class AuthService {
 	private final UserBumdesRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
 
-	public UserDetailsImpl authenticate (@Valid @RequestBody AuthRequest.Login req) {
-		UserBumdes user = userRepository.findByUsername(req.getUsername()).orElseThrow(() -> new BadCredentialsException("Hoho hihe: Badcredent"));
+	public UserDetailsImpl authenticate (AuthRequest.Login req) {
+
+
+		UserBumdes user = userRepository.findByUsername(req.getUsername()).orElseThrow(() -> new BadCredentialsException("Invalid Username or Password"));
 		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), req.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		return UserDetailsImpl.build(user);
@@ -40,7 +42,7 @@ public class AuthService {
 		System.out.println("=== cookie ===========");
 		cookie.setPath("/");
 		cookie.setHttpOnly(true);
-		cookie.setSecure(true);
+		cookie.setSecure(envService.isProd());
 		cookie.setMaxAge(envService.cookieExpirationInMs);
 //        cookie.setDomain("localhost");
 		servletResponse.addCookie(cookie);
@@ -50,40 +52,8 @@ public class AuthService {
 		Cookie cookie = new Cookie(envService.cookieKey, "");
 		cookie.setPath("/");
 		cookie.setHttpOnly(true);
-		cookie.setSecure(true);
+		cookie.setSecure(envService.isProd());
 		cookie.setMaxAge(0);
 		servletResponse.addCookie(cookie);
 	}
-
-
-//	public void resetPassword (AuthRequest.ResetPassword req, User userBjb) {
-//		if (! pbd2Hasher.checkPassword(req.getPasswordLama(), userBjb.getPassword())) {
-//			throw new InvalidOperationException("password lama tidak sesuai");
-//		}
-//
-//		if (! req.getPasswordBaru().equals(req.getKonfirmasiPasswordBaru())) {
-//			throw new InvalidOperationException("password baru dan konfirmasi password berbeda");
-//		}
-//
-//		String newHashedPassword = pbd2Hasher.hash(req.getPasswordBaru());
-//		userBjb.setPassword(newHashedPassword);
-//		userRepository.save(userBjb);
-//	}
-
-
-	//
-//	 public ResponseEntity<Response<AuthenticationResponse>> register(
-//					 User user
-//	 ) {
-//			if (userBjbRepository.existsByUsername(user.getUsername())) return CommonResponse.badRequest("username taken!");
-//			if (userBjbRepository.existsByEmail(user.getEmail())) return CommonResponse.badRequest("email taken!");
-//
-//
-//			userService.save(user);
-//			return CommonResponse.success();
-//
-////			AuthenticationResponse authenticationResponse = this.authenticate(user.getUsername(), user.getPassword());
-////			return CommonResponse.authResponse(authenticationResponse);
-//	 }
-
 }
