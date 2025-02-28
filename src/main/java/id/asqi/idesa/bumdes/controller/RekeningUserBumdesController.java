@@ -3,6 +3,7 @@ package id.asqi.idesa.bumdes.controller;
 
 import id.asqi.idesa.bumdes.core.http.CommonResponse;
 import id.asqi.idesa.bumdes.core.http.Response;
+import id.asqi.idesa.bumdes.core.http.request.IdNumberRequest;
 import id.asqi.idesa.bumdes.core.http.request.SearchPaginationRequest;
 import id.asqi.idesa.bumdes.http.request.RekeningUserBumdesRequest;
 import id.asqi.idesa.bumdes.model.RekeningUserBumdes;
@@ -33,6 +34,14 @@ public class RekeningUserBumdesController {
 	){
 		rekeningUserBumdesService.create(req);
 		return CommonResponse.created(RekeningUserBumdes.class);
+	}
+
+	@PostMapping
+	public ResponseEntity<Response<Void>> setRekeningUtama(
+			@RequestBody @Valid IdNumberRequest req
+	){
+		rekeningUserBumdesService.setRekeningUtama(req);
+		return CommonResponse.success("Berhasil set rekening utama");
 	}
 
 	@PutMapping

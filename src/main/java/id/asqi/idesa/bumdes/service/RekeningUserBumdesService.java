@@ -6,6 +6,7 @@ import id.asqi.idesa.bumdes.core.auth.UserDetailsImpl;
 import id.asqi.idesa.bumdes.core.component.MyPagination;
 import id.asqi.idesa.bumdes.core.component.exception.InvalidOperationException;
 import id.asqi.idesa.bumdes.core.component.exception.NotFoundEntity;
+import id.asqi.idesa.bumdes.core.http.request.IdNumberRequest;
 import id.asqi.idesa.bumdes.core.http.request.SearchPaginationRequest;
 import id.asqi.idesa.bumdes.http.request.RekeningUserBumdesRequest;
 import id.asqi.idesa.bumdes.model.RekeningUserBumdes;
@@ -23,7 +24,7 @@ import java.time.LocalDateTime;
 public class RekeningUserBumdesService {
 	private final RekeningUserBumdesRepository rekeningUserBumdesRepository;
 
-	public Page<RekeningUserBumdes> getAll(SearchPaginationRequest req){
+	public Page<RekeningUserBumdes> getAll (SearchPaginationRequest req) {
 		return rekeningUserBumdesRepository.search(
 				req.getSearch(),
 				Auth.id(),
@@ -31,7 +32,7 @@ public class RekeningUserBumdesService {
 		);
 	}
 
-	public void create(RekeningUserBumdesRequest.Create req){
+	public void create (RekeningUserBumdesRequest.Create req) {
 		this.validateRekeningCount();
 
 		RekeningUserBumdes e = new RekeningUserBumdes();
@@ -52,10 +53,10 @@ public class RekeningUserBumdesService {
 		e.setAtasNama(req.getAtasNama());
 		e.setNomorRekening(req.getNomorRekening());
 
-		if(req.getIsRekeningUtama()){
+		if (req.getIsRekeningUtama()) {
 			this.resetRekeningUtama();
 			e.setIsRekeningUtama(req.getIsRekeningUtama());
-		}else{
+		} else {
 			/*validasi (harus ada minimal 1 rekening utama*/
 			throw new InvalidOperationException("Harus ada minimal 1 rekening utama");
 		}
@@ -63,12 +64,22 @@ public class RekeningUserBumdesService {
 		rekeningUserBumdesRepository.save(e);
 	}
 
-	private void resetRekeningUtama(){
+	@Transactional
+	public void setRekeningUtama (IdNumberRequest req) {
+		RekeningUserBumdes e = rekeningUserBumdesRepository.findById(req.getId()).orElseThrow(() -> new NotFoundEntity(RekeningUserBumdes.class));
+
+		this.resetRekeningUtama();
+		e.setIsRekeningUtama(true);
+		rekeningUserBumdesRepository.save(e);
+	}
+
+
+	private void resetRekeningUtama () {
 		rekeningUserBumdesRepository.resetRekeningUtama(Auth.id());
 	}
 
-	private void validateRekeningCount(){
-		if(!rekeningUserBumdesRepository.hasMaxThreeRekening(Auth.id()))
+	private void validateRekeningCount () {
+		if (! rekeningUserBumdesRepository.hasMaxThreeRekening(Auth.id()))
 			throw new InvalidOperationException("User bumdes sudah memilik 3 rekening. Tidak dapat menambah rekening lagi.");
 	}
 
