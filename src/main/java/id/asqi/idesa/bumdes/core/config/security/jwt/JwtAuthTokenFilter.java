@@ -43,7 +43,6 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
 		String username;
 		String jwt;
 
-		/*find the right cookie or get it from header... or just kick the user.*/
 		Cookie[] cookiesArray = request.getCookies();
 		if (cookiesArray == null) {
 			jwt = this.getJwtFromHeader(request);

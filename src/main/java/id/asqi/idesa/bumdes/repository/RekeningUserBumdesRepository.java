@@ -29,4 +29,6 @@ public interface RekeningUserBumdesRepository extends JpaRepository<RekeningUser
 			@Param("userBumdesId") Long userBumdesId
 	);
 
+	@Query("UPDATE RekeningUserBumdes rub SET rub.isRekeningUtama = FALSE WHERE rub.userBumdes.id = :userBumdesId")
+	void resetRekeningUtama (@Param("userBumdesId") Long userBumdesId);
 }

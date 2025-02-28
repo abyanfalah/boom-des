@@ -10,6 +10,7 @@ import id.asqi.idesa.bumdes.core.http.request.SearchPaginationRequest;
 import id.asqi.idesa.bumdes.http.request.RekeningUserBumdesRequest;
 import id.asqi.idesa.bumdes.model.RekeningUserBumdes;
 import id.asqi.idesa.bumdes.repository.RekeningUserBumdesRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -44,12 +45,26 @@ public class RekeningUserBumdesService {
 		rekeningUserBumdesRepository.save(e);
 	}
 
+	@Transactional
 	public void update (RekeningUserBumdesRequest.Update req) {
 		RekeningUserBumdes e = rekeningUserBumdesRepository.findById(req.getId()).orElseThrow(() -> new NotFoundEntity(RekeningUserBumdes.class));
 		e.setNamaBank(req.getNamaBank());
 		e.setAtasNama(req.getAtasNama());
 		e.setNomorRekening(req.getNomorRekening());
+
+		if(req.getIsRekeningUtama()){
+			this.resetRekeningUtama();
+			e.setIsRekeningUtama(req.getIsRekeningUtama());
+		}else{
+			/*validasi (harus ada minimal 1 rekening utama*/
+			throw new InvalidOperationException("Harus ada minimal 1 rekening utama");
+		}
+
 		rekeningUserBumdesRepository.save(e);
+	}
+
+	private void resetRekeningUtama(){
+		rekeningUserBumdesRepository.resetRekeningUtama(Auth.id());
 	}
 
 	private void validateRekeningCount(){
