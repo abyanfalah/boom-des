@@ -25,7 +25,7 @@ public class ProdukGrosir {
     private String nama;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "kategori_produk_grosir_id", nullable = false)
     private KategoriProdukGrosir kategoriProdukGrosir;
 
@@ -38,7 +38,7 @@ public class ProdukGrosir {
     private Integer stok;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "satuan_id", nullable = false)
     private Satuan satuan;
 
@@ -62,7 +62,7 @@ public class ProdukGrosir {
     private String deskripsi;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "user_bumdes_id", nullable = false)
     private UserBumdes userBumdes;
 

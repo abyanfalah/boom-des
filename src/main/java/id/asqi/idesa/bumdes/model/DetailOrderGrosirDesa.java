@@ -15,12 +15,12 @@ public class DetailOrderGrosirDesa {
     private Long id;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "order_grosir_desa_id", nullable = false)
     private OrderGrosirDesa orderGrosirDesa;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "produk_grosir_desa_id", nullable = false)
     private ProdukGrosir produkGrosirDesa;
 

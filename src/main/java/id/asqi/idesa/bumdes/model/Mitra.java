@@ -37,12 +37,12 @@ public class Mitra {
     private String noTelpon;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "jabatan_mitra_id", nullable = false)
     private JabatanMitra jabatanMitra;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "jenis_mitra_id", nullable = false)
     private JenisMitra jenisMitra;
 

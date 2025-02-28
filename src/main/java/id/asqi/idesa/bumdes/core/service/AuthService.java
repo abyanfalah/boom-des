@@ -6,7 +6,6 @@ import id.asqi.idesa.bumdes.model.UserBumdes;
 import id.asqi.idesa.bumdes.repository.UserBumdesRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,7 +14,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 @RequiredArgsConstructor
@@ -26,8 +24,6 @@ public class AuthService {
 	private final PasswordEncoder passwordEncoder;
 
 	public UserDetailsImpl authenticate (AuthRequest.Login req) {
-
-
 		UserBumdes user = userRepository.findByUsername(req.getUsername()).orElseThrow(() -> new BadCredentialsException("Invalid Username or Password"));
 		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), req.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);

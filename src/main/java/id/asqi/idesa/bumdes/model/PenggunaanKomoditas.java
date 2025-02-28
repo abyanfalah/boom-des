@@ -35,12 +35,12 @@ public class PenggunaanKomoditas {
     private String deskripsi;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "user_bumdes_id", nullable = false)
     private UserBumdes userBumdes;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "data_komoditas_tahunan_id", nullable = false)
     private DataKomoditasTahunan dataKomoditasTahunan;
 

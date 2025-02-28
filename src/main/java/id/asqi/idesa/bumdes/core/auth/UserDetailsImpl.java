@@ -27,6 +27,8 @@ public class UserDetailsImpl implements UserDetails {
 
 	private Jabatan jabatan;
 
+	private UserBumdes userBumdes;
+
 	private Collection<? extends GrantedAuthority> authorities;
 
 	@Override
@@ -49,13 +51,15 @@ public class UserDetailsImpl implements UserDetails {
 			String username,
 			String password,
 			Jabatan jabatan,
-			Collection<? extends GrantedAuthority> authorities
+			Collection<? extends GrantedAuthority> authorities,
+			UserBumdes userBumdes
 	) {
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.jabatan = jabatan;
 		this.authorities = authorities;
+		this.userBumdes = userBumdes;
 	}
 
 	public static UserDetailsImpl build (UserBumdes user) {
@@ -66,7 +70,16 @@ public class UserDetailsImpl implements UserDetails {
 				user.getUsername(),
 				user.getPassword(),
 				user.getJabatan(),
-				combinedAuthorities
+				combinedAuthorities,
+				user
 		);
+	}
+
+	public UserBumdes getUserBumdes  () {
+		UserBumdes u = new UserBumdes();
+		u.setId(id);
+		u.setUsername(username);
+		u.setJabatan(jabatan);
+		return u;
 	}
 }

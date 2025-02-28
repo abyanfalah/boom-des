@@ -21,7 +21,7 @@ public class GambarBerita {
     private String url;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "berita_id", nullable = false)
     private Berita berita;
 

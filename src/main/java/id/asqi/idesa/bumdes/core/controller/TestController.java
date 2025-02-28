@@ -45,27 +45,17 @@ public class TestController {
 		return passwordEncoder.matches(req.get("raw"), req.get("hashed"));
 	}
 
+//		return  ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserBumdes();
 
 	@GetMapping("principal")
 	public Object testPrincipal () {
 		return Auth.getUserBumdes();
+//		return Auth.getPrincipal();
 	}
 
 	@GetMapping("protected")
 	public Object testProtected (Principal principal) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication != null && authentication.isAuthenticated()) {
-			System.out.println("Authentication: " + authentication);
-			System.out.println("Principal: " + principal);
-			if(authentication.getPrincipal() instanceof UserDetails){
-				UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-				System.out.println("UserDetails: " + userDetails);
-			}
-
-			return "Authenticated!";
-		} else {
-			return "Unauthenticated";
-		}
+		return principal;
 	}
 
 

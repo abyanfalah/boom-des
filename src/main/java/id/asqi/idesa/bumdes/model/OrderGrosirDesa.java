@@ -18,7 +18,7 @@ public class OrderGrosirDesa {
     private Long id;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "penduduk_id", nullable = false)
     private Penduduk penduduk;
 
@@ -27,12 +27,12 @@ public class OrderGrosirDesa {
     private Short status;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "metode_pengiriman_id", nullable = false)
     private MetodePengiriman metodePengiriman;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "metode_pembayaran_id", nullable = false)
     private MetodePembayaran metodePembayaran;
 

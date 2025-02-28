@@ -1,13 +1,13 @@
 package id.asqi.idesa.bumdes.model;
 
-import id.asqi.idesa.bumdes.model.UserBumdes;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -33,7 +33,7 @@ public class RekeningUserBumdes {
     private String nomorRekening;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "user_bumdes_id", nullable = false)
     private UserBumdes userBumdes;
 
@@ -42,10 +42,12 @@ public class RekeningUserBumdes {
     private Boolean isRekeningUtama = false;
 
     @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "tanggal_dibuat", nullable = false)
-    private Instant tanggalDibuat;
+    private LocalDateTime tanggalDibuat;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "tanggal_diubah")
-    private Instant tanggalDiubah;
+    private LocalDateTime tanggalDiubah;
 
 }

@@ -1,5 +1,6 @@
 package id.asqi.idesa.bumdes.core.config.security.jwt;
 
+import id.asqi.idesa.bumdes.core.auth.UserDetailsImpl;
 import id.asqi.idesa.bumdes.core.service.EnvService;
 import id.asqi.idesa.bumdes.model.UserBumdes;
 import jakarta.servlet.FilterChain;
@@ -68,7 +69,7 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
 			return;
 		}
 
-		UserDetails userDetails = jwtUserDetailService.loadUserByUsername(username);
+		UserDetailsImpl userDetails = jwtUserDetailService.loadUserByUsername(username);
 
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
 				userDetails,
@@ -76,9 +77,7 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
 				userDetails.getAuthorities()
 		);
 
-		authenticationToken.setDetails(
-				new WebAuthenticationDetailsSource().buildDetails(request)
-		);
+		authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
 		SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 		filterChain.doFilter(request, response);

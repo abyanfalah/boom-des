@@ -20,7 +20,7 @@ public class KategoriTagihanDesa {
     private Long id;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "kategori_dasar_tagihan_desa_id", nullable = false)
     private KategoriDasarTagihanDesa kategoriDasarTagihanDesa;
 
@@ -66,7 +66,7 @@ public class KategoriTagihanDesa {
     private BigDecimal hargaPerSatuan;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "user_bumdes_id", nullable = false)
     private UserBumdes userBumdes;
 

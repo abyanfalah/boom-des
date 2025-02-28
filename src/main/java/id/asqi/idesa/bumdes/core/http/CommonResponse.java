@@ -3,7 +3,6 @@ package id.asqi.idesa.bumdes.core.http;
 
 import id.asqi.idesa.bumdes.core.Constants;
 import id.asqi.idesa.bumdes.core.http.response.AuthResponse;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.data.domain.Page;
 import org.springframework.http.*;
 import org.springframework.validation.Errors;
@@ -79,14 +78,14 @@ public class CommonResponse {
 		return ResponseEntity.ok(r);
 	}
 
-	public static ResponseEntity<Response<Void>> stored (String entityName) {
+	public static ResponseEntity<Response<Void>> created (String entityName) {
 		Response<Void> r = new Response<>();
 		r.setResponseCode(ResponseCode.SUCCESS);
 		r.setMessage(entityName.concat(" berhasil disimpan"));
 		return ResponseEntity.ok(r);
 	}
 
-	public static <T> ResponseEntity<Response<Void>> stored (Class<T> tClass) {
+	public static <T> ResponseEntity<Response<Void>> created (Class<T> tClass) {
 		Response<Void> r = new Response<>();
 		r.setResponseCode(ResponseCode.SUCCESS);
 		r.setMessage(Constants.pascalToSentenceCase(tClass.getSimpleName()).concat(" berhasil disimpan"));

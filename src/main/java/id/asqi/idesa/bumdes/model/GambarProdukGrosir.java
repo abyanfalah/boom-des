@@ -19,7 +19,7 @@ public class GambarProdukGrosir {
     private String url;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "produk_grosir_id", nullable = false)
     private ProdukGrosir produkGrosir;
 

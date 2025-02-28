@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -23,14 +24,14 @@ public class Komoditas {
     private String nama;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "kategori_komoditas_id", nullable = false)
     private
     KategoriKomoditas kategoriKomoditas;
 
     @NotNull
     @Column(name = "tanggal_dibuat", nullable = false)
-    private Instant tanggalDibuat;
+    private LocalDateTime tanggalDibuat;
 
     @Column(name = "tanggal_diubah")
     private Instant tanggalDiubah;

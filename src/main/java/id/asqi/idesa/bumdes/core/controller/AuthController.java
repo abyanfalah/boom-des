@@ -1,6 +1,5 @@
 package id.asqi.idesa.bumdes.core.controller;
 
-import id.asqi.idesa.bumdes.core.auth.Auth;
 import id.asqi.idesa.bumdes.core.auth.UserDetailsImpl;
 import id.asqi.idesa.bumdes.core.config.security.jwt.JwtUtils;
 import id.asqi.idesa.bumdes.core.http.CommonResponse;

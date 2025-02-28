@@ -16,7 +16,7 @@ public class OpsiVariasiProdukMarketplaceDesa {
     private Long id;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "jenis_variasi_produk_marketplace_desa_id", nullable = false)
     private JenisVariasiProdukMarketplaceDesa jenisVariasiProdukMarketplaceDesa;
 

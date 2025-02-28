@@ -32,7 +32,7 @@ public class InformasiTokoDesa {
     private String urlFotoProfil;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "metode_pengiriman_id", nullable = false)
     private MetodePengiriman metodePengiriman;
 

@@ -3,6 +3,7 @@ package id.asqi.idesa.bumdes.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -12,7 +13,8 @@ import java.time.LocalDateTime;
 @Table(name = "user_bumdes")
 @Getter
 @Setter
-public class UserBumdes {
+@NoArgsConstructor
+public class UserBumdes{
 
 	@Id
 	@Column(name = "id")
@@ -40,5 +42,4 @@ public class UserBumdes {
 
 	@Column(name = "foto_profil")
 	private String fotoProfil;
-
 }

@@ -24,12 +24,12 @@ public class ProdukMarketplaceDesa {
     private String nama;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "kategori_produk_marketplace_desa_id", nullable = false)
     private KategoriProdukMarketplaceDesa kategoriProdukMarketplaceDesa;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "user_bumdes_id", nullable = false)
     private UserBumdes userBumdes;
 
@@ -46,7 +46,7 @@ public class ProdukMarketplaceDesa {
     private Boolean isAktif = false;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "satuan_id", nullable = false)
     private Satuan satuan;
 

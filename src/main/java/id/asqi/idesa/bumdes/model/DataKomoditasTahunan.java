@@ -22,7 +22,7 @@ public class DataKomoditasTahunan {
     private Short sumber;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "komoditas_id", nullable = false)
     private Komoditas komoditas;
 
@@ -39,7 +39,7 @@ public class DataKomoditasTahunan {
     private Short tahun;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "user_bumdes_id", nullable = false)
     private UserBumdes userBumdes;
 
