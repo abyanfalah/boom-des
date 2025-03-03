@@ -1,6 +1,5 @@
 package id.asqi.idesa.bumdes.model;
 
-import id.asqi.idesa.bumdes.model.UserBumdes;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -8,7 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,6 +28,9 @@ public class ProdukGrosir {
     @ManyToOne(optional = false)
     @JoinColumn(name = "kategori_produk_grosir_id", nullable = false)
     private KategoriProdukGrosir kategoriProdukGrosir;
+
+    @OneToMany(mappedBy = "produkGrosir")
+    private List<GambarProdukGrosir> gambarProdukGrosir;
 
     @NotNull
     @Column(name = "kondisi", nullable = false)
@@ -68,9 +71,9 @@ public class ProdukGrosir {
 
     @NotNull
     @Column(name = "tanggal_dibuat", nullable = false)
-    private Instant tanggalDibuat;
+    private LocalDateTime tanggalDibuat;
 
     @Column(name = "tanggal_diubah")
-    private Instant tanggalDiubah;
+    private LocalDateTime tanggalDiubah;
 
 }

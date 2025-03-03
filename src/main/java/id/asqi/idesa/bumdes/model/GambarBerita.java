@@ -1,5 +1,6 @@
 package id.asqi.idesa.bumdes.model;
 
+import id.asqi.idesa.bumdes.model.unused.Berita;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

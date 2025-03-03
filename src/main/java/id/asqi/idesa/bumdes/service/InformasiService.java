@@ -79,7 +79,7 @@ public class InformasiService {
 		validateOwner(e);
 
 		if(! Objects.equals(e.getUserBumdes().getId(), Auth.id())) {
-			throw new InvalidOperationException("Tidak bisa menghapus informasi orang lain");
+			throw new InvalidOperationException("Tidak dapat menghapus informasi orang lain");
 		}
 
 		informasiRepository.delete(e);
@@ -115,7 +115,7 @@ public class InformasiService {
 
 	private void validateOwner(Informasi e){
 		if(! Objects.equals(e.getUserBumdes().getId(), Auth.id())){
-			throw new InvalidOperationException("Informasi ini bukan milik orang Anda.");
+			throw new InvalidOperationException("Informasi ini bukan milik anda.");
 		}
 	}
 
