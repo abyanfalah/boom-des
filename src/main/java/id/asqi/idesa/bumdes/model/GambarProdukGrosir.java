@@ -1,5 +1,6 @@
 package id.asqi.idesa.bumdes.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -21,6 +22,7 @@ public class GambarProdukGrosir {
     @NotNull
     @ManyToOne(optional = false)
     @JoinColumn(name = "produk_grosir_id", nullable = false)
+    @JsonBackReference
     private ProdukGrosir produkGrosir;
 
 }
