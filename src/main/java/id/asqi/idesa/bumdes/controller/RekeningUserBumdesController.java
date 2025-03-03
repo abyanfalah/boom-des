@@ -28,7 +28,7 @@ public class RekeningUserBumdesController {
 		return CommonResponse.paginated(page);
 	}
 
-	@PostMapping
+	@PostMapping("create")
 	public ResponseEntity<Response<Void>> create(
 			@RequestBody @Valid RekeningUserBumdesRequest.Create req
 	){
@@ -36,7 +36,7 @@ public class RekeningUserBumdesController {
 		return CommonResponse.created(RekeningUserBumdes.class);
 	}
 
-	@PostMapping
+	@PostMapping("set-rekening-utama")
 	public ResponseEntity<Response<Void>> setRekeningUtama(
 			@RequestBody @Valid IdNumberRequest req
 	){
@@ -44,7 +44,7 @@ public class RekeningUserBumdesController {
 		return CommonResponse.success("Berhasil set rekening utama");
 	}
 
-	@PutMapping
+	@PostMapping("update")
 	public ResponseEntity<Response<Void>> update(
 			@RequestBody @Valid RekeningUserBumdesRequest.Update req
 	){
