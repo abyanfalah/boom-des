@@ -1,11 +1,14 @@
 package id.asqi.idesa.bumdes.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,8 +23,16 @@ public class Informasi {
     @Column(name = "judul", nullable = false, length = Integer.MAX_VALUE)
     private String judul;
 
-    @Column(name = "isi", length = Integer.MAX_VALUE)
+    @Column(name = "isi")
     private String isi;
+
+    @OneToMany(mappedBy = "informasi")
+    @JsonManagedReference
+    private List<GambarInformasi> gambar;
+
+    @OneToMany(mappedBy = "informasi")
+    @JsonManagedReference
+    private List<DokumenInformasi> dokumen;
 
     @NotNull
     @ManyToOne(optional = false)
@@ -30,9 +41,8 @@ public class Informasi {
 
     @NotNull
     @Column(name = "tanggal_dibuat", nullable = false)
-    private Instant tanggalDibuat;
+    private LocalDateTime tanggalDibuat;
 
     @Column(name = "tanggal_diubah")
-    private Instant tanggalDiubah;
-
+    private LocalDateTime tanggalDiubah;
 }
