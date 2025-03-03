@@ -10,6 +10,7 @@ import lombok.Setter;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -55,6 +56,6 @@ public class Berita {
     private Long alamatProvinsiId;
 
     @Column(name = "tanggal_ditambah")
-    private Instant tanggalDitambah;
+    private LocalDateTime tanggalDitambah;
 
 }

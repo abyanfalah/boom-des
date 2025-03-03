@@ -14,15 +14,15 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "kategori_berita")
-public class KategoriBerita {
+@Table(name = "kategori_berita_bumdes")
+public class KategoriBeritaBumdes {
     @Id
     @Column(name = "id", nullable = false)
     private Long id;
 
     @Size(max = 64)
     @NotNull
-    @Column(name = "nama", nullable = false, length = 64)
+    @Column(name = "nama", nullable = false)
     private String nama;
 
     @NotNull
