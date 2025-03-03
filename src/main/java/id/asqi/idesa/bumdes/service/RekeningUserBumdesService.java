@@ -2,8 +2,6 @@ package id.asqi.idesa.bumdes.service;
 
 import id.asqi.idesa.bumdes.core.Constants;
 import id.asqi.idesa.bumdes.core.auth.Auth;
-import id.asqi.idesa.bumdes.core.auth.UserDetailsImpl;
-import id.asqi.idesa.bumdes.core.component.MyPagination;
 import id.asqi.idesa.bumdes.core.component.exception.InvalidOperationException;
 import id.asqi.idesa.bumdes.core.component.exception.NotFoundEntity;
 import id.asqi.idesa.bumdes.core.http.request.IdNumberRequest;
@@ -14,10 +12,10 @@ import id.asqi.idesa.bumdes.repository.RekeningUserBumdesRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -49,6 +47,9 @@ public class RekeningUserBumdesService {
 	@Transactional
 	public void update (RekeningUserBumdesRequest.Update req) {
 		RekeningUserBumdes e = rekeningUserBumdesRepository.findById(req.getId()).orElseThrow(() -> new NotFoundEntity(RekeningUserBumdes.class));
+
+		this.validateOwner(e);
+
 		e.setNamaBank(req.getNamaBank());
 		e.setAtasNama(req.getAtasNama());
 		e.setNomorRekening(req.getNomorRekening());
@@ -68,6 +69,8 @@ public class RekeningUserBumdesService {
 	public void setRekeningUtama (IdNumberRequest req) {
 		RekeningUserBumdes e = rekeningUserBumdesRepository.findById(req.getId()).orElseThrow(() -> new NotFoundEntity(RekeningUserBumdes.class));
 
+		this.validateOwner(e);
+
 		this.resetRekeningUtama();
 		e.setIsRekeningUtama(true);
 		rekeningUserBumdesRepository.save(e);
@@ -81,6 +84,13 @@ public class RekeningUserBumdesService {
 	private void validateRekeningCount () {
 		if (! rekeningUserBumdesRepository.hasMaxThreeRekening(Auth.id()))
 			throw new InvalidOperationException("User bumdes sudah memilik 3 rekening. Tidak dapat menambah rekening lagi.");
+	}
+
+	private void validateOwner(RekeningUserBumdes e){
+		if(! Objects.equals(e.getUserBumdes().getId(), Auth.id())){
+			throw new InvalidOperationException("Rekening ini milik orang lain");
+		}
+
 	}
 
 
