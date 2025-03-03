@@ -144,6 +144,8 @@ public class HttpLogger extends OncePerRequestFilter {
 	}
 
 	private Boolean isFileResponse (ContentCachingResponseWrapper wrappedResponse) {
+		if(wrappedResponse.getContentType() == null) return false;
+
 		return wrappedResponse.getContentType().contains("image") || wrappedResponse.getContentType().contains("pdf") || wrappedResponse.getContentType().contains("octet-stream");
 	}
 
