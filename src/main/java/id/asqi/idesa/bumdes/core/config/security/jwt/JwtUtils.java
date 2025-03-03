@@ -2,7 +2,6 @@ package id.asqi.idesa.bumdes.core.config.security.jwt;
 
 import id.asqi.idesa.bumdes.core.auth.UserDetailsImpl;
 import id.asqi.idesa.bumdes.core.service.EnvService;
-import id.asqi.idesa.bumdes.model.UserBumdes;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -29,7 +28,7 @@ public class JwtUtils {
         .compact();
   }
 
-  private Key key() {
+  public Key key() {
     return Keys.hmacShaKeyFor(Decoders.BASE64.decode(envService.jwtSecret));
   }
 
@@ -37,22 +36,4 @@ public class JwtUtils {
     return Jwts.parserBuilder().setSigningKey(key()).build()
                .parseClaimsJws(jwt).getBody().getSubject();
   }
-
-
-  /*will figure out where to use this later*/
-    public boolean isValidToken(String authToken) {
-      try {
-        Jwts.parserBuilder().setSigningKey(key()).build().parse(authToken);
-        return true;
-      } catch (MalformedJwtException e) {
-        logger.error("Invalid JWT token: {}", e.getMessage());
-      } catch (ExpiredJwtException e) {
-        logger.error("JWT token is expired: {}", e.getMessage());
-      } catch (UnsupportedJwtException e) {
-        logger.error("JWT token is unsupported: {}", e.getMessage());
-      } catch (IllegalArgumentException e) {
-        logger.error("JWT claims string is empty: {}", e.getMessage());
-      }
-      return false;
-    }
 }
