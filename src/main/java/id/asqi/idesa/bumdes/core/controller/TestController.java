@@ -1,18 +1,16 @@
 package id.asqi.idesa.bumdes.core.controller;
 
-import com.google.common.base.Verify;
 import id.asqi.idesa.bumdes.core.Constants;
 import id.asqi.idesa.bumdes.core.auth.Auth;
 import id.asqi.idesa.bumdes.core.auth.UserDetailsImpl;
 import id.asqi.idesa.bumdes.core.http.CommonResponse;
+import id.asqi.idesa.bumdes.model.AlamatDesa;
 import id.asqi.idesa.bumdes.model.Jabatan;
 import id.asqi.idesa.bumdes.model.UserBumdes;
+import id.asqi.idesa.bumdes.repository.AlamatDesaRepository;
 import id.asqi.idesa.bumdes.repository.JabatanRepository;
 import id.asqi.idesa.bumdes.repository.UserBumdesRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +27,7 @@ import java.util.Map;
 public class TestController {
 	private final UserBumdesRepository userBumdesRepository;
 	private final PasswordEncoder passwordEncoder;
+	private final AlamatDesaRepository alamatDesaRepository;
 
 	private final JabatanRepository jabatanRepository;
 
@@ -75,6 +74,7 @@ public class TestController {
 		String username = "test" + (userBumdesCount + 1);
 
 		Jabatan jabatan = jabatanRepository.findAll().get(0);
+		AlamatDesa alamatDesa = alamatDesaRepository.findById(3203012001L).get();
 
 		UserBumdes ub = new UserBumdes();
 		ub.setId(Constants.idGenerator());
@@ -82,6 +82,7 @@ public class TestController {
 		ub.setPassword(passwordEncoder.encode("1234"));
 		ub.setAlamat("Jl. Jalan");
 		ub.setJabatan(jabatan);
+		ub.setAlamatDesa(alamatDesa);
 		ub.setTanggalDibuat(LocalDateTime.now());
 		userBumdesRepository.save(ub);
 
