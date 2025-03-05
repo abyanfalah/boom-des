@@ -14,7 +14,6 @@ public class AlamatKabupaten {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "provinsi_id")
     private AlamatProvinsi provinsi;
 
