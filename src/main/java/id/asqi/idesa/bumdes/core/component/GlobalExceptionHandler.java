@@ -53,7 +53,8 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<?> exceptionHandler (Exception e) {
-		ErrorLogger.printFilteredStackTrace(e, this.getClass().getPackageName()); e.printStackTrace();
+		ErrorLogger.printFilteredStackTrace(e, this.getClass().getPackageName());
+//		e.printStackTrace();
 		return CommonResponse.serverError(e.getMessage());
 	}
 

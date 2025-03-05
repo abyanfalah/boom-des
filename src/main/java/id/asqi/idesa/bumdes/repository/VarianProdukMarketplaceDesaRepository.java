@@ -11,7 +11,7 @@ public interface VarianProdukMarketplaceDesaRepository extends JpaRepository<Var
 	@Query("""
 			SELECT e FROM VarianProdukMarketplaceDesa e
 			WHERE (:q = '' OR (
-				LOWER(e.nama) LIKE LOWER(CONCAT('%', :q, '%'))
+				LOWER(e.sku) LIKE LOWER(CONCAT('%', :q, '%'))
 							))
 			""")
 	Page<VarianProdukMarketplaceDesa> search(

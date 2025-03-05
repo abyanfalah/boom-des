@@ -7,7 +7,6 @@ import id.asqi.idesa.bumdes.core.component.exception.NotFoundEntity;
 import id.asqi.idesa.bumdes.core.http.request.SearchPaginationRequest;
 import id.asqi.idesa.bumdes.core.http.request.SetStatusRequest;
 import id.asqi.idesa.bumdes.http.request.ProdukMarketplaceDesaRequest;
-import id.asqi.idesa.bumdes.model.KategoriProdukMarketplaceDesa;
 import id.asqi.idesa.bumdes.model.ProdukMarketplaceDesa;
 import id.asqi.idesa.bumdes.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -36,8 +35,6 @@ public class ProdukMarketplaceDesaService {
 	}
 
 	public void create (ProdukMarketplaceDesaRequest.Create req) throws Exception {
-
-
 		ProdukMarketplaceDesa e = new ProdukMarketplaceDesa();
 		e.setId(Constants.idGenerator());
 		e.setTanggalDibuat(LocalDateTime.now());
@@ -46,9 +43,7 @@ public class ProdukMarketplaceDesaService {
 
 	public void update (ProdukMarketplaceDesaRequest.Update req) {
 		ProdukMarketplaceDesa e = produkMarketplaceDesaRepository.findById(req.getId()).orElseThrow(() -> new NotFoundEntity(ProdukMarketplaceDesa.class));
-
 		e.setTanggalDiubah(LocalDateTime.now());
-
 		produkMarketplaceDesaRepository.save(e);
 	}
 
@@ -60,8 +55,4 @@ public class ProdukMarketplaceDesaService {
 
 		produkMarketplaceDesaRepository.save(e);
 	}
-
-
-
-
 }

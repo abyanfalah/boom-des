@@ -28,13 +28,7 @@ public class TestController {
 	private final UserBumdesRepository userBumdesRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final AlamatDesaRepository alamatDesaRepository;
-
 	private final JabatanRepository jabatanRepository;
-
-//	@GetMapping
-//	public String test() {
-//		return "MELEDACC \uD83C\uDF49 \uD83C\uDF49 \uD83C\uDF49";
-//	}
 
 	@GetMapping
 	public Object test (
@@ -44,12 +38,14 @@ public class TestController {
 		return passwordEncoder.matches(req.get("raw"), req.get("hashed"));
 	}
 
-//		return  ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserBumdes();
-
 	@GetMapping("principal")
 	public Object testPrincipal () {
 		return Auth.getUserBumdes();
-//		return Auth.getPrincipal();
+	}
+
+	@GetMapping("alamat-desa")
+	public Object alamatDesa () {
+		return Auth.getAlamatDesa();
 	}
 
 	@GetMapping("protected")

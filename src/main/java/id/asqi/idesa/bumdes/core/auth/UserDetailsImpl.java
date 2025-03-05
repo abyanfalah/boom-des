@@ -1,6 +1,7 @@
 package id.asqi.idesa.bumdes.core.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import id.asqi.idesa.bumdes.model.AlamatDesa;
 import id.asqi.idesa.bumdes.model.Jabatan;
 import id.asqi.idesa.bumdes.model.UserBumdes;
 import lombok.Getter;
@@ -28,6 +29,7 @@ public class UserDetailsImpl implements UserDetails {
 	private Jabatan jabatan;
 
 	private UserBumdes userBumdes;
+	private AlamatDesa alamatDesa;
 
 	private Collection<? extends GrantedAuthority> authorities;
 
@@ -60,6 +62,7 @@ public class UserDetailsImpl implements UserDetails {
 		this.jabatan = jabatan;
 		this.authorities = authorities;
 		this.userBumdes = userBumdes;
+		this.alamatDesa = userBumdes.getAlamatDesa();
 	}
 
 	public static UserDetailsImpl build (UserBumdes user) {
@@ -75,11 +78,14 @@ public class UserDetailsImpl implements UserDetails {
 		);
 	}
 
-	public UserBumdes getUserBumdes  () {
+	public UserBumdes getUserBumdes () {
 		UserBumdes u = new UserBumdes();
 		u.setId(id);
 		u.setUsername(username);
 		u.setJabatan(jabatan);
+		u.setAlamatDesa(alamatDesa);
+		u.setTanggalDibuat(userBumdes.getTanggalDibuat());
+		u.setFotoProfil(userBumdes.getFotoProfil());
 		return u;
 	}
 }

@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,6 +23,11 @@ public class InformasiTokoDesa {
     @Column(name = "nama", nullable = false)
     private String nama;
 
+
+    @OneToOne()
+    @JoinColumn(name = "alamat_desa_id")
+    private AlamatDesa alamatDesa;
+
     @Size(max = 20)
     @NotNull
     @Column(name = "no_telpon", nullable = false, length = 20)
@@ -31,14 +37,29 @@ public class InformasiTokoDesa {
     @Column(name = "url_foto_profil")
     private String urlFotoProfil;
 
-    @NotNull
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "metode_pengiriman_id", nullable = false)
-    private MetodePengiriman metodePengiriman;
+
+    @ManyToMany
+    @JoinTable(
+            name = "metode_pengiriman_toko_desa",
+            joinColumns = @JoinColumn(
+                    name = "informasi_toko_desa_id", referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "metode_pengiriman_id", referencedColumnName = "id"
+            )
+    )
+    private List<MetodePengiriman> metodePengiriman;
 
     @NotNull
     @Column(name = "alamat_lengkap", nullable = false, length = Integer.MAX_VALUE)
     private String alamatLengkap;
+
+    @Column(name = "latitude")
+    private String latitude;
+
+    @Column(name = "longitude")
+    private String longitude;
+
 
     @Column(name = "tanggal_diubah")
     private Instant tanggalDiubah;

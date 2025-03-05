@@ -37,7 +37,7 @@ public class ErrorLogger {
 		log.error(logString);
 
 		// not logged to file
-		System.err.println(logString);
+//		System.err.println(logString);
 	}
 
 	private static String getMainPackageString (String packageName) {

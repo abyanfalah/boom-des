@@ -32,6 +32,10 @@ public class S3Storage {
 	}
 
 	public String uploadFile (String folderName, MultipartFile file) throws Exception {
+		if(file == null){
+			return null;
+		}
+
 		try (InputStream inputStream = file.getInputStream()) {
 			String originalFileName = file.getOriginalFilename();
 			String extension = "";
