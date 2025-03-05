@@ -1,4 +1,4 @@
-package id.asqi.idesa.bumdes.model.unused;
+package id.asqi.idesa.bumdes.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -14,6 +14,7 @@ public class AlamatDesa {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @ManyToOne
     @JoinColumn(name = "kecamatan_id")
     private AlamatKecamatan kecamatan;
 
