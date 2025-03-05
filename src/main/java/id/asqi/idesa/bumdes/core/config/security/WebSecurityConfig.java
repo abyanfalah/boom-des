@@ -69,6 +69,7 @@ public class WebSecurityConfig {
 						/*test*/
 //						.requestMatchers("/test/**").permitAll()
 						.requestMatchers("/test").permitAll()
+						.requestMatchers("/test/generate-user-bumdes").permitAll()
 						.requestMatchers("/test/principal").authenticated()
 						.requestMatchers("/test/protected").permitAll()
 
