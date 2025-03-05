@@ -63,6 +63,15 @@ public class MitraService {
 		mitraRepository.save(e);
 	}
 
+	public void setStatus (MitraRequest.SetStatus req) {
+		Mitra e = mitraRepository.findById(req.getId()).orElseThrow(() -> new NotFoundEntity(Mitra.class));
+
+		e.setIsAktif(req.getIsAktif());
+		e.setTanggalDiubah(LocalDateTime.now());
+
+		mitraRepository.save(e);
+	}
+
 
 
 

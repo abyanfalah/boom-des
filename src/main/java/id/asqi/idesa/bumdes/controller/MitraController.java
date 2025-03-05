@@ -48,6 +48,14 @@ public class MitraController {
 		return CommonResponse.updated(Mitra.class);
 	}
 
+	@PostMapping("set-status")
+	public ResponseEntity<Response<Void>> setStatus(
+			@RequestBody @Valid MitraRequest.SetStatus req
+	){
+		mitraService.setStatus(req);
+		return CommonResponse.updated("Status mitra berhasil di perbarui");
+	}
+
 	@PostMapping("delete")
 	public ResponseEntity<Response<Void>> delete(
 			@RequestBody @Valid IdNumberRequest req

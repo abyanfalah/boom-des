@@ -30,4 +30,11 @@ public class MitraRequest {
 		@NotNull
 		private Boolean isAktif;
 	}
+
+	@Getter
+	@Setter
+	public static class SetStatus extends IdNumberRequest {
+		@NotNull
+		private Boolean isAktif;
+	}
 }
