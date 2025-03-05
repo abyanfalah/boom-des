@@ -1,5 +1,8 @@
 package id.asqi.idesa.bumdes.model.unused;
 
+import id.asqi.idesa.bumdes.model.AlamatDesa;
+import id.asqi.idesa.bumdes.model.AlamatKabupaten;
+import id.asqi.idesa.bumdes.model.AlamatKecamatan;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
