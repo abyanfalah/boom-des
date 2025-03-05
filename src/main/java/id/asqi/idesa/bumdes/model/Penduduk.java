@@ -17,8 +17,8 @@ public class Penduduk {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Size(max = 30)
-    @Column(name = "nik", length = 30)
+    @Size(max = 16)
+    @Column(name = "nik", length = 16)
     private String nik;
 
     @Size(max = 255)
