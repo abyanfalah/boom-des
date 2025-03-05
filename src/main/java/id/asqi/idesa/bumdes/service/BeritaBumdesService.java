@@ -46,14 +46,12 @@ public class BeritaBumdesService {
 		e.setIsi(req.getIsi());
 		e.setUserBumdes(Auth.getUserBumdes());
 		e.setKategoriBeritaBumdes(kategoriBeritaBumdes);
+		e.setAlamatDesa(Auth.getAlamatDesa());
 		e.setIsDitayangkan(false);
 		e.setKataKunci(req.getKataKunci());
 		e.setTanggalDibuat(LocalDateTime.now());
 
-		e = beritaBumdesRepository.save(e);
-
-//		this.saveDokumen(req.getDokumen(), e);
-//		this.saveGambar(req.getGambar(), e);
+		beritaBumdesRepository.save(e);
 	}
 
 	@Transactional
