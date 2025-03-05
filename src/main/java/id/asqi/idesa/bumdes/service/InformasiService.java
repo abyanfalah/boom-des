@@ -50,6 +50,7 @@ public class InformasiService {
 		e.setJudul(req.getJudul());
 		e.setIsi(req.getIsi());
 		e.setUserBumdes(Auth.getUserBumdes());
+		e.setAlamatDesa(Auth.getAlamatDesa());
 		e.setTanggalDibuat(LocalDateTime.now());
 
 		e = informasiRepository.save(e);
