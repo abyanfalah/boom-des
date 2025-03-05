@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -32,6 +33,10 @@ public class ProdukMarketplaceDesa {
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_bumdes_id", nullable = false)
     private UserBumdes userBumdes;
+
+    @ManyToOne
+    @JoinColumn(name = "alamat_desa_id", nullable = false)
+    private AlamatDesa alamatDesa;
 
     @NotNull
     @Column(name = "kondisi", nullable = false)
@@ -65,9 +70,9 @@ public class ProdukMarketplaceDesa {
 
     @NotNull
     @Column(name = "tanggal_dibuat", nullable = false)
-    private Instant tanggalDibuat;
+    private LocalDateTime tanggalDibuat;
 
     @Column(name = "tanggal_diubah")
-    private Instant tanggalDiubah;
+    private LocalDateTime tanggalDiubah;
 
 }

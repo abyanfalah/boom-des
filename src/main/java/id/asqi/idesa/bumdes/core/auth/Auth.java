@@ -23,5 +23,9 @@ public class Auth {
 	public static AlamatDesa getAlamatDesa () {
 		return getUserBumdes().getAlamatDesa();
 	}
+	public static Long getAlamatDesaId () {
+		return getUserBumdes().getAlamatDesa().getId();
+	}
+
 
 }
