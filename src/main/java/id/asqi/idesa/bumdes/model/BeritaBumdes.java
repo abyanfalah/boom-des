@@ -29,6 +29,10 @@ public class BeritaBumdes {
     @JoinColumn(name = "user_bumdes_id", nullable = false)
     private UserBumdes userBumdes;
 
+    @ManyToOne
+    @JoinColumn(name = "alamat_desa_id", nullable = false)
+    private AlamatDesa alamatDesa;
+
     @Column(name = "kata_kunci")
     private List<String> kataKunci;
 

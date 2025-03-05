@@ -1,9 +1,6 @@
 package id.asqi.idesa.bumdes.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,5 +21,9 @@ public class Penduduk {
     @Size(max = 255)
     @Column(name = "nama")
     private String nama;
+
+    @ManyToOne
+    @JoinColumn(name = "alamat_desa_id", nullable = false)
+    private AlamatDesa alamatDesa;
 
 }

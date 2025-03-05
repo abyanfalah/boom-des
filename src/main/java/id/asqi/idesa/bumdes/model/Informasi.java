@@ -35,9 +35,13 @@ public class Informasi {
     private List<DokumenInformasi> dokumen;
 
     @NotNull
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "user_bumdes_id", nullable = false)
     private UserBumdes userBumdes;
+
+    @ManyToOne
+    @JoinColumn(name = "alamat_desa_id", nullable = false)
+    private AlamatDesa alamatDesa;
 
     @NotNull
     @Column(name = "tanggal_dibuat", nullable = false)

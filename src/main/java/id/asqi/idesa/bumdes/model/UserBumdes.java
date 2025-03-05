@@ -34,6 +34,10 @@ public class UserBumdes{
 	@JoinColumn(name = "jabatan_id")
 	private Jabatan jabatan;
 
+	@ManyToOne
+	@JoinColumn(name = "alamat_desa_id")
+	private AlamatDesa alamatDesa;
+
 	@Column(name = "tanggal_dibuat")
 	private LocalDateTime tanggalDibuat;
 

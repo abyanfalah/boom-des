@@ -6,7 +6,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.Instant;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -17,24 +18,13 @@ public class Mitra {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Size(max = 16)
-    @NotNull
-    @Column(name = "nik", nullable = false, length = 16)
-    private String nik;
+    @OneToOne()
+    @JoinColumn(name = "penduduk_id")
+    private Penduduk penduduk;
 
-    @Size(max = 255)
-    @NotNull
-    @Column(name = "nama", nullable = false)
-    private String nama;
-
-    @NotNull
-    @Column(name = "alamat", nullable = false, length = Integer.MAX_VALUE)
-    private String alamat;
-
-    @Size(max = 20)
-    @NotNull
-    @Column(name = "no_telpon", nullable = false, length = 20)
-    private String noTelpon;
+    @ManyToOne
+    @JoinColumn(name = "alamat_desa_id", nullable = false)
+    private AlamatDesa alamatDesa;
 
     @NotNull
     @ManyToOne(optional = false)
@@ -51,10 +41,14 @@ public class Mitra {
     private Boolean isAktif = false;
 
     @NotNull
+    @Column(name = "saldo", nullable = false)
+    private BigDecimal saldo;
+
+    @NotNull
     @Column(name = "tanggal_dibuat", nullable = false)
-    private Instant tanggalDibuat;
+    private LocalDateTime tanggalDibuat;
 
     @Column(name = "tanggal_diubah")
-    private Instant tanggalDiubah;
+    private LocalDateTime tanggalDiubah;
 
 }
