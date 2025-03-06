@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 
@@ -50,6 +51,16 @@ public class ProdukMarketplaceDesa {
     @Column(name = "is_aktif", nullable = false)
     private Boolean isAktif = false;
 
+
+    @Column(name = "harga_jual_utama")
+    private BigDecimal hargaJualUtama;
+
+    @Column(name = "harga_modal")
+    private BigDecimal hargaModal;
+
+    @Column(name = "fee_aplikasi")
+    private BigDecimal feeAplikasi;
+
     @NotNull
     @ManyToOne(optional = false)
     @JoinColumn(name = "satuan_id", nullable = false)
@@ -75,4 +86,7 @@ public class ProdukMarketplaceDesa {
     @Column(name = "tanggal_diubah")
     private LocalDateTime tanggalDiubah;
 
+    @NotNull
+    @Column(name = "has_varian", nullable = false)
+    private Boolean hasVarian = false;
 }
