@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 // Varian Produk Marketplace Desa
 @Entity
@@ -52,5 +53,17 @@ public class VarianProdukMarketplaceDesa {
 
 	@Column(name = "tanggal_diubah")
 	private LocalDateTime tanggalDiubah;
+
+	@ManyToMany
+	@JoinTable(
+			name = "mapping_varian_produk_marketplace_desa",
+			joinColumns = @JoinColumn(
+					name = "varian_produk_marketplace_desa_id", referencedColumnName = "id"
+			),
+			inverseJoinColumns = @JoinColumn(
+					name = "opsi_variasi_produk_marketplace_desa_id", referencedColumnName = "id"
+			)
+	)
+	private List<OpsiVariasiProdukMarketplaceDesa> opsiVariasi;
 
 }

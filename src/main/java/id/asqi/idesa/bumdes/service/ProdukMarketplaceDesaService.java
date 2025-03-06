@@ -24,7 +24,7 @@ public class ProdukMarketplaceDesaService {
 	private final ProdukMarketplaceDesaRepository produkMarketplaceDesaRepository;
 	private final JenisVariasiProdukMarketplaceDesaRepository jenisVariasiRepository;
 	private final VarianProdukMarketplaceDesaRepository varianRepository;
-	private final MappingVarianProdukMarketplaceDesaRepository mappingVarianRepository;
+	//	private final MappingVarianProdukMarketplaceDesaRepository mappingVarianRepository;
 	private final SatuanRepository satuanRepository;
 	private final OpsiVariasiProdukMarketplaceDesaRepository opsiVariasiRepository;
 	private final KategoriProdukMarketplaceDesaRepository kategoriRepository;
@@ -65,8 +65,8 @@ public class ProdukMarketplaceDesaService {
 		e.setTanggalDibuat(LocalDateTime.now());
 		e = produkMarketplaceDesaRepository.save(e);
 
-		this.handleHargaJualGrosir(e,req);
-		this.handleVarian(e, req);
+		this.handleHargaJualGrosir(e, req);
+		this.handleJenisVariasiWithOpsi(e, req);
 	}
 
 	public void update (ProdukMarketplaceDesaRequest.Update req) {
@@ -84,16 +84,16 @@ public class ProdukMarketplaceDesaService {
 		produkMarketplaceDesaRepository.save(e);
 	}
 
-	private KategoriProdukMarketplaceDesa getKategori (Long id){
+	private KategoriProdukMarketplaceDesa getKategori (Long id) {
 		return kategoriRepository.findById(id).orElseThrow(() -> new NotFoundEntity(KategoriProdukMarketplaceDesa.class));
 	}
 
-	private Satuan getSatuan (Long id){
+	private Satuan getSatuan (Long id) {
 		return satuanRepository.findById(id).orElseThrow(() -> new NotFoundEntity(Satuan.class));
 	}
 
 	private void handleHargaJualGrosir (ProdukMarketplaceDesa e, ProdukMarketplaceDesaRequest.Create req) {
-		if(req.getHargaJualGrosir() == null || req.getHargaJualGrosir().isEmpty()) return;
+		if (req.getHargaJualGrosir() == null || req.getHargaJualGrosir().isEmpty()) return;
 
 		List<HargaGrosir> result = new ArrayList<>();
 		for (ProdukMarketplaceDesaRequest.HargaJualGrosir item : req.getHargaJualGrosir()) {
@@ -107,30 +107,68 @@ public class ProdukMarketplaceDesaService {
 		hargaGrosirRepository.saveAll(result);
 	}
 
-	private void handleVarian (ProdukMarketplaceDesa e, ProdukMarketplaceDesaRequest.Create req) {
-		if(req.getJenisVarian() == null || req.getJenisVarian().isEmpty()) return;
+	/*saves variants and variants options*/
+	private void handleJenisVariasiWithOpsi (ProdukMarketplaceDesa e, ProdukMarketplaceDesaRequest.Create req) {
+		if (req.getJenisVarian() == null || req.getJenisVarian().isEmpty()) return;
 
-		List<JenisVariasiProdukMarketplaceDesa> jenisVariasiList = new ArrayList<>();
-		List<OpsiVariasiProdukMarketplaceDesa> opsiList = new ArrayList<>();
+		List<JenisVariasiProdukMarketplaceDesa> jvList = new ArrayList<>();
+		List<OpsiVariasiProdukMarketplaceDesa> ovList = new ArrayList<>();
 
-		for(ProdukMarketplaceDesaRequest.JenisVarian jenisVarian : req.getJenisVarian()) {
+		for (ProdukMarketplaceDesaRequest.JenisVarian jenisVarian : req.getJenisVarian()) {
 			JenisVariasiProdukMarketplaceDesa jv = new JenisVariasiProdukMarketplaceDesa();
 			jv.setId(Constants.idGenerator());
 			jv.setProdukMarketplaceDesa(e);
 			jv.setNama(jenisVarian.getNama());
 			jv = jenisVariasiRepository.save(jv);
+			jvList.add(jv);
 
-			for(ProdukMarketplaceDesaRequest.OpsiVarian opsiVarian : jenisVarian.getOpsiVarian()) {
+			for (ProdukMarketplaceDesaRequest.OpsiVarian opsiVarian : jenisVarian.getOpsiVarian()) {
 				OpsiVariasiProdukMarketplaceDesa ov = new OpsiVariasiProdukMarketplaceDesa();
 				ov.setId(Constants.idGenerator());
 				ov.setJenisVariasiProdukMarketplaceDesa(jv);
 				ov.setNama(opsiVarian.getNama());
-				opsiList.add(ov);
+				ov = opsiVariasiRepository.save(ov);
+				ovList.add(ov);
 			}
-			opsiVariasiRepository.saveAll(opsiList);
 		}
 
+
+		this.handleVarian(e, req, ovList);
 	}
 
+	private void handleVarian (ProdukMarketplaceDesa e, ProdukMarketplaceDesaRequest.Create req, List<OpsiVariasiProdukMarketplaceDesa> ovList) {
+		if (req.getVarian() == null || req.getVarian().isEmpty()) return;
 
+		Satuan satuan = satuanRepository.findById(req.getSatuanId()).orElseThrow(() -> new NotFoundEntity(Satuan.class));
+
+		List<VarianProdukMarketplaceDesa> result = new ArrayList<>();
+		for (ProdukMarketplaceDesaRequest.Varian varian : req.getVarian()) {
+			VarianProdukMarketplaceDesa v = new VarianProdukMarketplaceDesa();
+			v.setId(Constants.idGenerator());
+			v.setProdukMarketplaceDesa(e);
+			v.setHargaJualUtama(varian.getHargaJualUtama());
+			v.setHargaModal(varian.getHargaModal());
+			v.setSatuan(satuan);
+			v.setBobotSatuan(varian.getBobotSatuan());
+			v.setSku(varian.getSku());
+			v.setStok(varian.getStok());
+			v.setIsAktif(varian.getIsAktif());
+			v.setOpsiVariasi(this.getChoosenOpsi(varian, ovList));
+			result.add(v);
+		}
+		varianRepository.saveAll(result);
+	}
+
+	private List<OpsiVariasiProdukMarketplaceDesa> getChoosenOpsi(
+			ProdukMarketplaceDesaRequest.Varian varian,
+			List<OpsiVariasiProdukMarketplaceDesa> ovList) {
+
+		return varian.getOpsiVarian().stream()
+				.flatMap(jenisOpsi -> ovList.stream()
+						.filter(ov ->
+								ov.getJenisVariasiProdukMarketplaceDesa().getNama().equals(jenisOpsi.getNamaJenisVariasi())
+								&& ov.getNama().equals(jenisOpsi.getNamaOpsiVariasi()))
+				)
+				.toList();
+	}
 }

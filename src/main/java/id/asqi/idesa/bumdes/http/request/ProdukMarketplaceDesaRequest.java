@@ -9,7 +9,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -178,16 +177,16 @@ public class ProdukMarketplaceDesaRequest {
 		private Boolean isAktif;
 
 		@NotEmpty
-		private List<PilihanVarianWithOpsi> opsiVarian;
+		private List<JenisVariasiWithOpsi> opsiVarian;
 	}
 
 
 	@Getter @Setter
-	public static class PilihanVarianWithOpsi{
+	public static class JenisVariasiWithOpsi {
 		@NotBlank
-		private String namaVarian;
+		private String namaJenisVariasi;
 
 		@NotBlank
-		private String opsiVarian;
+		private String namaOpsiVariasi;
 	}
 }
