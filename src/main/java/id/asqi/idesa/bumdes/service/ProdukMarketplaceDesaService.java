@@ -9,6 +9,7 @@ import id.asqi.idesa.bumdes.core.http.request.SetStatusRequest;
 import id.asqi.idesa.bumdes.http.request.ProdukMarketplaceDesaRequest;
 import id.asqi.idesa.bumdes.model.*;
 import id.asqi.idesa.bumdes.repository.*;
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,6 +30,7 @@ public class ProdukMarketplaceDesaService {
 	private final OpsiVariasiProdukMarketplaceDesaRepository opsiVariasiRepository;
 	private final KategoriProdukMarketplaceDesaRepository kategoriRepository;
 	private final HargaGrosirRepository hargaGrosirRepository;
+	private final EntityManager entityManager;
 
 	public Page<ProdukMarketplaceDesa> getAll (SearchPaginationRequest req) {
 		return produkMarketplaceDesaRepository.search(
@@ -104,7 +106,7 @@ public class ProdukMarketplaceDesaService {
 			hargaGrosir.setHarga(item.getHargaJualGrosir());
 			result.add(hargaGrosir);
 		}
-		hargaGrosirRepository.saveAll(result);
+			hargaGrosirRepository.saveAll(result);
 	}
 
 	/*saves variants and variants options*/
@@ -154,6 +156,8 @@ public class ProdukMarketplaceDesaService {
 			v.setStok(varian.getStok());
 			v.setIsAktif(varian.getIsAktif());
 			v.setOpsiVariasi(this.getChoosenOpsi(varian, ovList));
+			v.setIsUtama(varian.getIsUtama());
+			v.setTanggalDibuat(LocalDateTime.now());
 			result.add(v);
 		}
 		varianRepository.saveAll(result);

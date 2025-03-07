@@ -178,6 +178,13 @@ public class ProdukMarketplaceDesaRequest {
 
 		@NotEmpty
 		private List<JenisVariasiWithOpsi> opsiVarian;
+
+		@NotNull
+		private Boolean isUtama;
+
+		public Boolean getIsUtama() {
+			return isUtama != null && isUtama;
+		}
 	}
 
 
