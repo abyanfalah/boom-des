@@ -1,6 +1,7 @@
 package id.asqi.idesa.bumdes.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,10 +19,12 @@ public class HargaGrosir {
 	private Long id;
 
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "produk_marketplace_desa_id")
 	private ProdukMarketplaceDesa produkMarketplaceDesa;
 
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "varian_produk_marketplace_desa_id")
 	private VarianProdukMarketplaceDesa varianProdukMarketplaceDesa;
 

@@ -1,5 +1,6 @@
 package id.asqi.idesa.bumdes.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import id.asqi.idesa.bumdes.model.UserBumdes;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -10,6 +11,9 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 @Getter
 @Setter
@@ -89,4 +93,27 @@ public class ProdukMarketplaceDesa {
     @NotNull
     @Column(name = "has_varian", nullable = false)
     private Boolean hasVarian = false;
+
+    @OneToMany(mappedBy = "produkMarketplaceDesa")
+    @JsonManagedReference
+    private List<HargaGrosir> hargaGrosir;
+
+    @OneToMany(mappedBy = "produkMarketplaceDesa")
+    @JsonManagedReference
+    private List<VarianProdukMarketplaceDesa> varian;
+
+    @OneToMany(mappedBy = "produkMarketplaceDesa")
+    @JsonManagedReference
+    private List<JenisVariasiProdukMarketplaceDesa> jenisVariasi;
+
+    /*Gemini suggested to sort from the frontend.*/
+//    public List<HargaGrosir> getHargaGrosir() {
+//        if (hargaGrosir == null || hargaGrosir.isEmpty()) {
+//            return hargaGrosir;
+//        }
+//
+//        List<HargaGrosir> sortedHargaGrosir = new ArrayList<>(hargaGrosir);
+//        sortedHargaGrosir.sort(Comparator.comparingInt(HargaGrosir::getKuantitasMinimum));
+//        return sortedHargaGrosir;
+//    }
 }

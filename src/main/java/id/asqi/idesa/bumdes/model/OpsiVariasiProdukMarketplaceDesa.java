@@ -1,5 +1,6 @@
 package id.asqi.idesa.bumdes.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -18,11 +19,10 @@ public class OpsiVariasiProdukMarketplaceDesa {
     @NotNull
     @ManyToOne(optional = false)
     @JoinColumn(name = "jenis_variasi_produk_marketplace_desa_id", nullable = false)
+    @JsonBackReference
     private JenisVariasiProdukMarketplaceDesa jenisVariasiProdukMarketplaceDesa;
 
-    @Size(max = 128)
     @NotNull
     @Column(name = "nama", nullable = false, length = 128)
     private String nama;
-
 }
