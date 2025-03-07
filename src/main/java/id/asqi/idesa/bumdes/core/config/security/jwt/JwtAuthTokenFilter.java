@@ -6,7 +6,6 @@ import id.asqi.idesa.bumdes.core.http.CommonResponse;
 import id.asqi.idesa.bumdes.core.http.Response;
 import id.asqi.idesa.bumdes.core.service.EnvService;
 import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import jakarta.servlet.FilterChain;
