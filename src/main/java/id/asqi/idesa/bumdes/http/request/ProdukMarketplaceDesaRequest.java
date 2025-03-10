@@ -69,6 +69,76 @@ public class ProdukMarketplaceDesaRequest {
 		private List<JenisVarian> jenisVarian;
 
 		private List<Varian> varian;
+
+
+		@Getter
+		@Setter
+		public static class HargaJualGrosir{
+			@NotNull
+			private Integer minimalPembelian;
+
+			@NotNull
+			private BigDecimal hargaJualGrosir;
+		}
+
+
+		@Getter @Setter
+		public static class JenisVarian{
+			@NotBlank
+			private String nama;
+
+			@NotEmpty
+			private List<OpsiVarian> opsiVarian;
+		}
+
+		@Getter @Setter
+		public static class OpsiVarian{
+			@NotBlank
+			private String nama;
+		}
+
+		@Getter @Setter
+		public static class Varian{
+			@NotNull
+			private BigDecimal hargaJualUtama;
+
+			@NotNull
+			private BigDecimal hargaModal;
+
+			@NotNull
+			private Long satuanId;
+
+			@NotNull @Min(value = 0, message = "Minimal 0")
+			private Integer bobotSatuan;
+
+			private String sku;
+
+			@NotNull @Min(0)
+			private Integer stok;
+
+			@NotNull
+			private Boolean isAktif;
+
+			@NotEmpty
+			private List<JenisVariasiWithOpsi> opsiVarian;
+
+			@NotNull
+			private Boolean isUtama;
+
+			public Boolean getIsUtama() {
+				return isUtama != null && isUtama;
+			}
+		}
+
+
+		@Getter @Setter
+		public static class JenisVariasiWithOpsi {
+			@NotBlank
+			private String namaJenisVariasi;
+
+			@NotBlank
+			private String namaOpsiVariasi;
+		}
 	}
 
 	@Getter
@@ -125,75 +195,75 @@ public class ProdukMarketplaceDesaRequest {
 		private List<JenisVarian> jenisVarian;
 
 		private List<Varian> varian;
-	}
 
 
-	@Getter
-	@Setter
-	public static class HargaJualGrosir{
-		@NotNull
-		private Integer minimalPembelian;
+		@Getter
+		@Setter
+		public static class HargaJualGrosir extends IdNumberRequest{
+			@NotNull
+			private Integer minimalPembelian;
 
-		@NotNull
-		private BigDecimal hargaJualGrosir;
-	}
-
-
-	@Getter @Setter
-	public static class JenisVarian{
-		@NotBlank
-		private String nama;
-
-		@NotEmpty
-		private List<OpsiVarian> opsiVarian;
-	}
-
-	@Getter @Setter
-	public static class OpsiVarian{
-		@NotBlank
-		private String nama;
-	}
-
-	@Getter @Setter
-	public static class Varian{
-		@NotNull
-		private BigDecimal hargaJualUtama;
-
-		@NotNull
-		private BigDecimal hargaModal;
-
-		@NotNull
-		private Long satuanId;
-
-		@NotNull @Min(value = 0, message = "Minimal 0")
-		private Integer bobotSatuan;
-
-		private String sku;
-
-		@NotNull @Min(0)
-		private Integer stok;
-
-		@NotNull
-		private Boolean isAktif;
-
-		@NotEmpty
-		private List<JenisVariasiWithOpsi> opsiVarian;
-
-		@NotNull
-		private Boolean isUtama;
-
-		public Boolean getIsUtama() {
-			return isUtama != null && isUtama;
+			@NotNull
+			private BigDecimal hargaJualGrosir;
 		}
-	}
 
 
-	@Getter @Setter
-	public static class JenisVariasiWithOpsi {
-		@NotBlank
-		private String namaJenisVariasi;
+		@Getter @Setter
+		public static class JenisVarian extends IdNumberRequest{
+			@NotBlank
+			private String nama;
 
-		@NotBlank
-		private String namaOpsiVariasi;
+			@NotEmpty
+			private List<OpsiVarian> opsiVarian;
+		}
+
+		@Getter @Setter
+		public static class OpsiVarian extends IdNumberRequest{
+			@NotBlank
+			private String nama;
+		}
+
+		@Getter @Setter
+		public static class Varian extends IdNumberRequest{
+			@NotNull
+			private BigDecimal hargaJualUtama;
+
+			@NotNull
+			private BigDecimal hargaModal;
+
+			@NotNull
+			private Long satuanId;
+
+			@NotNull @Min(value = 0, message = "Minimal 0")
+			private Integer bobotSatuan;
+
+			private String sku;
+
+			@NotNull @Min(0)
+			private Integer stok;
+
+			@NotNull
+			private Boolean isAktif;
+
+			@NotEmpty
+			private List<JenisVariasiWithOpsi> opsiVarian;
+
+			@NotNull
+			private Boolean isUtama;
+
+			public Boolean getIsUtama() {
+				return isUtama != null && isUtama;
+			}
+		}
+
+
+		@Getter @Setter
+		public static class JenisVariasiWithOpsi extends IdNumberRequest{
+			@NotBlank
+			private String namaJenisVariasi;
+
+			@NotBlank
+			private String namaOpsiVariasi;
+		}
 	}
 }

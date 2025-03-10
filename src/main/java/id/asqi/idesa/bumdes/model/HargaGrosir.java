@@ -3,8 +3,10 @@ package id.asqi.idesa.bumdes.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import id.asqi.idesa.bumdes.http.request.ProdukMarketplaceDesaRequest;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
@@ -13,6 +15,7 @@ import java.math.BigDecimal;
 @Table(name = "harga_grosir")
 @Getter
 @Setter
+@NoArgsConstructor
 public class HargaGrosir {
 
 	@Id
@@ -36,4 +39,7 @@ public class HargaGrosir {
 
 	@Column(name = "harga")
 	private BigDecimal harga;
+
+
+
 }

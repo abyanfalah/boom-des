@@ -9,4 +9,15 @@ import lombok.Setter;
 public class IdNumberRequest {
 	 @NotNull
 	 private Long id;
+
+
+	 /*for batch update operation where creation and updation
+	 * can happen in one request.
+	 * use this to check if it's new or updated existing entity.
+	 *
+	 * you decide the logic
+	 * */
+	 public Boolean isNew(){
+		 return id == 0L;
+	 }
 }
