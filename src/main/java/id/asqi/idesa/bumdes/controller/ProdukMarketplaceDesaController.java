@@ -6,6 +6,7 @@ import id.asqi.idesa.bumdes.core.http.CommonResponse;
 import id.asqi.idesa.bumdes.core.http.Response;
 import id.asqi.idesa.bumdes.core.http.request.IdNumberRequest;
 import id.asqi.idesa.bumdes.core.http.request.SearchPaginationRequest;
+import id.asqi.idesa.bumdes.dto.ProdukMarketplaceDesaDTO;
 import id.asqi.idesa.bumdes.http.request.ProdukMarketplaceDesaRequest;
 import id.asqi.idesa.bumdes.model.ProdukMarketplaceDesa;
 import id.asqi.idesa.bumdes.service.ProdukMarketplaceDesaService;
@@ -22,10 +23,10 @@ public class ProdukMarketplaceDesaController {
 	private final ProdukMarketplaceDesaService produkMarketplaceDesaService;
 
 	@PostMapping("all")
-	public ResponseEntity<Response<Page<ProdukMarketplaceDesa>>> getAll(
+	public ResponseEntity<Response<Page<ProdukMarketplaceDesaDTO>>> getAll(
 			@RequestBody @Valid SearchPaginationRequest req
 	){
-		Page<ProdukMarketplaceDesa> page = produkMarketplaceDesaService.getAll(req);
+		Page<ProdukMarketplaceDesaDTO> page = produkMarketplaceDesaService.getAll(req);
 		return CommonResponse.paginated(page);
 	}
 

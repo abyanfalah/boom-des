@@ -2,6 +2,7 @@ package id.asqi.idesa.bumdes.model;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,11 +21,13 @@ public class HargaGrosir {
 
 	@ManyToOne
 	@JsonBackReference
+	@JsonIgnore
 	@JoinColumn(name = "produk_marketplace_desa_id")
 	private ProdukMarketplaceDesa produkMarketplaceDesa;
 
 	@ManyToOne
 	@JsonBackReference
+	@JsonIgnore
 	@JoinColumn(name = "varian_produk_marketplace_desa_id")
 	private VarianProdukMarketplaceDesa varianProdukMarketplaceDesa;
 

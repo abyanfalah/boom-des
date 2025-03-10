@@ -1,7 +1,6 @@
 package id.asqi.idesa.bumdes.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import id.asqi.idesa.bumdes.model.UserBumdes;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -9,10 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 @Getter
@@ -93,6 +89,10 @@ public class ProdukMarketplaceDesa {
     @NotNull
     @Column(name = "has_varian", nullable = false)
     private Boolean hasVarian = false;
+
+    @OneToMany(mappedBy = "produkMarketplaceDesa")
+    @JsonManagedReference
+    private List<GambarProdukMarketplaceDesa> urlGambar;
 
     @OneToMany(mappedBy = "produkMarketplaceDesa")
     @JsonManagedReference

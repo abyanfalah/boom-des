@@ -6,6 +6,7 @@ import id.asqi.idesa.bumdes.core.auth.Auth;
 import id.asqi.idesa.bumdes.core.component.exception.NotFoundEntity;
 import id.asqi.idesa.bumdes.core.http.request.SearchPaginationRequest;
 import id.asqi.idesa.bumdes.core.http.request.SetStatusRequest;
+import id.asqi.idesa.bumdes.dto.ProdukMarketplaceDesaDTO;
 import id.asqi.idesa.bumdes.http.request.ProdukMarketplaceDesaRequest;
 import id.asqi.idesa.bumdes.model.*;
 import id.asqi.idesa.bumdes.repository.*;
@@ -30,10 +31,10 @@ public class ProdukMarketplaceDesaService {
 	private final OpsiVariasiProdukMarketplaceDesaRepository opsiVariasiRepository;
 	private final KategoriProdukMarketplaceDesaRepository kategoriRepository;
 	private final HargaGrosirRepository hargaGrosirRepository;
-	private final EntityManager entityManager;
 
-	public Page<ProdukMarketplaceDesa> getAll (SearchPaginationRequest req) {
-		return produkMarketplaceDesaRepository.search(
+	/*uses DTO*/
+	public Page<ProdukMarketplaceDesaDTO> getAll (SearchPaginationRequest req) {
+		return produkMarketplaceDesaRepository.searchDTO(
 				req.getSearch(),
 				Auth.getAlamatDesaId(),
 				req.getPagination()
