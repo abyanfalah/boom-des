@@ -142,8 +142,6 @@ public class ProdukMarketplaceDesaService {
 	private void handleVarian (ProdukMarketplaceDesa e, ProdukMarketplaceDesaRequest.Create req, List<OpsiVariasiProdukMarketplaceDesa> ovList) {
 		if (req.getVarian() == null || req.getVarian().isEmpty()) return;
 
-		Satuan satuan = satuanRepository.findById(req.getSatuanId()).orElseThrow(() -> new NotFoundEntity(Satuan.class));
-
 		List<VarianProdukMarketplaceDesa> result = new ArrayList<>();
 		for (ProdukMarketplaceDesaRequest.Varian varian : req.getVarian()) {
 			VarianProdukMarketplaceDesa v = new VarianProdukMarketplaceDesa();
@@ -151,7 +149,7 @@ public class ProdukMarketplaceDesaService {
 			v.setProdukMarketplaceDesa(e);
 			v.setHargaJualUtama(varian.getHargaJualUtama());
 			v.setHargaModal(varian.getHargaModal());
-			v.setSatuan(satuan);
+			v.setSatuan(this.getSatuan(varian.getSatuanId()));
 			v.setBobotSatuan(varian.getBobotSatuan());
 			v.setSku(varian.getSku());
 			v.setStok(varian.getStok());
