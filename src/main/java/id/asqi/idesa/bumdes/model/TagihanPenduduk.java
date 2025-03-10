@@ -6,7 +6,6 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-// Tagihan Penduduk
 @Entity
 @Table(name = "tagihan_penduduk")
 @Getter
@@ -52,5 +51,7 @@ public class TagihanPenduduk {
 
 	@Column(name = "tanggal_diubah")
 	private LocalDateTime tanggalDiubah;
+
+
 
 }

@@ -1,6 +1,5 @@
 package id.asqi.idesa.bumdes.model;
 
-import id.asqi.idesa.bumdes.model.UserBumdes;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -69,6 +68,10 @@ public class KategoriTagihanDesa {
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_bumdes_id", nullable = false)
     private UserBumdes userBumdes;
+
+    @ManyToOne
+    @JoinColumn(name = "alamat_desa_id", nullable = false)
+    private AlamatDesa alamatDesa;
 
     @NotNull
     @Column(name = "tanggal_dibuat", nullable = false)
