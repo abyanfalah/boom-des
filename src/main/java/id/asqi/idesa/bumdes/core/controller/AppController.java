@@ -1,9 +1,9 @@
 package id.asqi.idesa.bumdes.core.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/")
@@ -14,4 +14,15 @@ public class AppController {
 		return "MELEDACC \uD83C\uDF49 \uD83C\uDF49 \uD83C\uDF49";
 	}
 
+	/*don't get this shit. will figure it out later.*/
+	@PostMapping("asdfasdf")
+	public Object formData (@ModelAttribute Map<String, String> req) {
+		return "asdf";
+	}
+
+	@GetMapping("asdfasdf")
+	public Object formDataget (Map<String, String> req) {
+		return "asdf";
+
+	}
 }
