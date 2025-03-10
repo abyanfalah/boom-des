@@ -34,6 +34,10 @@ public class Komoditas {
     private LocalDateTime tanggalDibuat;
 
     @Column(name = "tanggal_diubah")
-    private Instant tanggalDiubah;
+    private LocalDateTime tanggalDiubah;
+
+    @Column(name = "tanggal_dihapus")
+    private LocalDateTime tanggalDihapus;
+
 
 }

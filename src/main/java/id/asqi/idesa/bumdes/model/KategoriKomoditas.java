@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -31,9 +32,12 @@ public class KategoriKomoditas {
 
     @NotNull
     @Column(name = "tanggal_dibuat", nullable = false)
-    private Instant tanggalDibuat;
+    private LocalDateTime tanggalDibuat;
 
     @Column(name = "tanggal_diubah")
-    private Instant tanggalDiubah;
+    private LocalDateTime tanggalDiubah;
+
+    @Column(name = "tanggal_dihapus")
+    private LocalDateTime tanggalDihapus;
 
 }
