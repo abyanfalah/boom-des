@@ -12,6 +12,8 @@ public class SearchPaginationRequest extends PaginationRequest {
 
 	private Boolean isAktif;
 
+	private Boolean isIncludeDeleted;
+
 	public String getSearch () {
 		return this.search == null ? "" : this.search.trim();
 	}

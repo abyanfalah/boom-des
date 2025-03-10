@@ -6,7 +6,7 @@ import lombok.Setter;
 import org.springframework.data.domain.Sort;
 
 @Getter @Setter
-public class PaginationRequest {
+public class PaginationRequest extends BasicFiltersRequest {
 	 @Min(0)
 	 int page;
 
