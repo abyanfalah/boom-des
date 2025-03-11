@@ -56,6 +56,6 @@ public class KomoditasController {
 			@RequestBody @Valid SetDeleteStatusRequest req
 	){
 		KomoditasService.softDelete(req);
-		return CommonResponse.softDeleted(Komoditas.class);
+		return CommonResponse.toggledSoftDelete(Komoditas.class, req);
 	}
 }
