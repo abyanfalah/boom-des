@@ -1,12 +1,10 @@
 package id.asqi.idesa.bumdes.service;
 
 import id.asqi.idesa.bumdes.core.Constants;
-import id.asqi.idesa.bumdes.core.Helper;
 import id.asqi.idesa.bumdes.core.component.exception.NotFoundEntity;
-import id.asqi.idesa.bumdes.core.http.request.IdNumberRequest;
 import id.asqi.idesa.bumdes.core.http.request.SearchPaginationRequest;
 import id.asqi.idesa.bumdes.core.http.request.SetDeleteStatusRequest;
-import id.asqi.idesa.bumdes.core.service.Validation;
+import id.asqi.idesa.bumdes.core.service.Validator;
 import id.asqi.idesa.bumdes.http.request.KomoditasRequest;
 import id.asqi.idesa.bumdes.model.KategoriKomoditas;
 import id.asqi.idesa.bumdes.model.Komoditas;
@@ -38,7 +36,7 @@ public class KomoditasService {
 
 	public void create (KomoditasRequest.Create req) throws Exception {
 		KategoriKomoditas kategori = this.findKategoriById(req.getKategoriKomoditasId());
-		Validation.deletionCheck(kategori.getTanggalDihapus(), KategoriKomoditas.class);
+		Validator.deletionCheck(kategori.getTanggalDihapus(), KategoriKomoditas.class);
 
 		Komoditas e = new Komoditas();
 		e.setId(Constants.idGenerator());
@@ -52,7 +50,7 @@ public class KomoditasService {
 		Komoditas e = this.findById(req.getId());
 
 		KategoriKomoditas kategori = this.findKategoriById(req.getKategoriKomoditasId());
-		Validation.deletionCheck(kategori.getTanggalDihapus(), KategoriKomoditas.class);
+		Validator.deletionCheck(kategori.getTanggalDihapus(), KategoriKomoditas.class);
 
 		e.setNama(req.getNama());
 		e.setKategoriKomoditas(kategori);
