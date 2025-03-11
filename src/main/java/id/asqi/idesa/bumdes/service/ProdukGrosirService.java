@@ -68,7 +68,7 @@ public class ProdukGrosirService {
 
 		e = produkGrosirRepository.save(e);
 
-		this.uploadGambar(e, req.getGambar());
+//		this.uploadGambar(e, req.getGambar());
 	}
 	@Transactional
 	public void update (ProdukGrosirRequest.Update req) throws Exception {
@@ -113,17 +113,17 @@ public class ProdukGrosirService {
 	}
 
 	private void uploadGambar (ProdukGrosir e, List<MultipartFile> files) throws Exception {
-//		List<GambarProdukGrosir> list = new ArrayList<>();
-//		for(MultipartFile file : files){
-//			String url = s3Storage.uploadFile(FolderName.GAMBAR_PRODUK_GROSIR, file);
-//			GambarProdukGrosir gambar = new GambarProdukGrosir();
-//			gambar.setId(Constants.idGenerator());
-//			gambar.setProdukGrosir(e);
-//			gambar.setUrl(url);
-//			list.add(gambar);
-//		}
-//
-//		gambarProdukGrosirRepository.saveAll(list);
+		List<GambarProdukGrosir> list = new ArrayList<>();
+		for(MultipartFile file : files){
+			String url = s3Storage.uploadFile(FolderName.GAMBAR_PRODUK_GROSIR, file);
+			GambarProdukGrosir gambar = new GambarProdukGrosir();
+			gambar.setId(Constants.idGenerator());
+			gambar.setProdukGrosir(e);
+			gambar.setUrl(url);
+			list.add(gambar);
+		}
+
+		gambarProdukGrosirRepository.saveAll(list);
 	}
 
 
