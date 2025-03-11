@@ -106,6 +106,9 @@ public class ProdukMarketplaceDesa {
     @JsonManagedReference
     private List<JenisVariasiProdukMarketplaceDesa> jenisVariasi;
 
+    @Column(name = "tanggal_dihapus")
+    private LocalDateTime tanggalDihapus;
+
     /*Gemini suggested to sort from the frontend.*/
 //    public List<HargaGrosir> getHargaGrosir() {
 //        if (hargaGrosir == null || hargaGrosir.isEmpty()) {

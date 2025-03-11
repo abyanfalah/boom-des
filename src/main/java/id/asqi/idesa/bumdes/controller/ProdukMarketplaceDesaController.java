@@ -6,6 +6,7 @@ import id.asqi.idesa.bumdes.core.http.CommonResponse;
 import id.asqi.idesa.bumdes.core.http.Response;
 import id.asqi.idesa.bumdes.core.http.request.IdNumberRequest;
 import id.asqi.idesa.bumdes.core.http.request.SearchPaginationRequest;
+import id.asqi.idesa.bumdes.core.http.request.SetDeleteStatusRequest;
 import id.asqi.idesa.bumdes.dto.ProdukMarketplaceDesaDTO;
 import id.asqi.idesa.bumdes.http.request.ProdukMarketplaceDesaRequest;
 import id.asqi.idesa.bumdes.model.ProdukMarketplaceDesa;
@@ -48,9 +49,12 @@ public class ProdukMarketplaceDesaController {
 
 	@PostMapping("delete")
 	public ResponseEntity<Response<Void>> delete(
-			@RequestBody @Valid IdNumberRequest req
+			@RequestBody @Valid SetDeleteStatusRequest req
 	){
-		/*soft delete?*/
-		throw new InvalidOperationException("Tidak bisa menghapus ProdukMarketplaceDesa");
+//		throw new InvalidOperationException("Tidak bisa menghapus ProdukMarketplaceDesa");
+
+		produkMarketplaceDesaService.softDelete(req);
+		return CommonResponse.toggledSoftDelete(ProdukMarketplaceDesa.class, req);
+
 	}
 }
