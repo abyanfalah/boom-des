@@ -2,6 +2,7 @@ package id.asqi.idesa.bumdes.core.http;
 
 
 import id.asqi.idesa.bumdes.core.Constants;
+import id.asqi.idesa.bumdes.core.http.request.SetDeleteStatusRequest;
 import id.asqi.idesa.bumdes.core.http.response.AuthResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.http.*;
@@ -117,6 +118,15 @@ public class CommonResponse {
 		Response<Void> r = new Response<>();
 		r.setResponseCode(ResponseCode.SUCCESS);
 		r.setMessage(Constants.pascalToSentenceCase(tClass.getSimpleName()).concat(" berhasil dihapus (soft delete)"));
+		return ResponseEntity.ok(r);
+	}
+
+	public static <T> ResponseEntity<Response<Void>> toggledSoftDelete (Class<T> tClass, SetDeleteStatusRequest req) {
+		String state = req.getIsDeleted() ? " dihapus (soft delete)" : " di-restore";
+
+		Response<Void> r = new Response<>();
+		r.setResponseCode(ResponseCode.SUCCESS);
+		r.setMessage(Constants.pascalToSentenceCase(tClass.getSimpleName()).concat(" berhasil".concat(state).concat(".")));
 		return ResponseEntity.ok(r);
 	}
 
