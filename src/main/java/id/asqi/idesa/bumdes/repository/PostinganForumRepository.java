@@ -17,8 +17,8 @@ public interface PostinganForumRepository extends JpaRepository<PostinganForum, 
                 LOWER(p.judul) LIKE LOWER(CONCAT('%', :q, '%'))
             ))
             AND (:isIncludeDeleted = TRUE OR p.tanggalDihapus IS NULL)
-            AND (:alamatDesaId = IS NULL OR p.)
-            
+            AND (:alamatDesaId IS NULL OR p.alamatDesa.id = :alamatDesaId)
+            AND (:userBumdesId IS NULL OR p.userBumdes.id = :userBumdesId)
             """;
 
 	@Query(searchQuery)
@@ -33,6 +33,8 @@ public interface PostinganForumRepository extends JpaRepository<PostinganForum, 
 	@Query(searchQuery)
 	List<PostinganForum> search(
 			@Param("q") String search,
-			@Param("isIncludeDeleted") Boolean isIncludeDeleted
+			@Param("isIncludeDeleted") Boolean isIncludeDeleted,
+			@Param("alamatDesaId") Long alamatDesaId,
+			@Param("userBumdesId") Long userBumdesId
 	);
 }
