@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -75,9 +76,15 @@ public class KategoriTagihanDesa {
 
     @NotNull
     @Column(name = "tanggal_dibuat", nullable = false)
-    private Instant tanggalDibuat;
+    private LocalDateTime tanggalDibuat;
 
     @Column(name = "tanggal_diubah")
     private Instant tanggalDiubah;
 
+    @NotNull
+    @Column(name = "is_aktif", nullable = false)
+    private Boolean isAktif = false;
+
+    @Column(name = "tanggal_dihapus")
+    private LocalDateTime tanggalDihapus;
 }

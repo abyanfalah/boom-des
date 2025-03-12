@@ -11,24 +11,27 @@ import java.util.List;
 
 public interface KategoriTagihanDesaRepository extends JpaRepository<KategoriTagihanDesa, Long> {
 	String searchQuery = """
-   	    SELECT ktd FROM KategoriTagihanDesa ktd
-		WHERE ktd.alamatDesa.id = :alamatDesaId
-		AND (:q = '' OR 
-			LOWER(ktd.nama) LIKE LOWER(concat('%', :q, '%'))
-		)
-			""";
+			 	    SELECT ktd FROM KategoriTagihanDesa ktd
+			WHERE ktd.alamatDesa.id = :alamatDesaId
+			AND (:q = '' OR 
+				LOWER(ktd.nama) LIKE LOWER(concat('%', :q, '%'))
+			)
+	        AND (:isAktif IS NULL OR e.isAktif = :isAktif)
+		    AND (:isIncludeDeleted = TRUE  OR e.tanggalDihapus IS NULL)
+				""";
 
 	@Query(searchQuery)
-	Page<KategoriTagihanDesa> findByAlamatDesaId(
-			@Param("q") String q,
-			@Param("alamatDesaId") Long alamatDesaId,
+	Page<KategoriTagihanDesa> search (
+			@Param("q") String search,
+			@Param("isAktif") Boolean isAktif,
+			@Param("isIncludeDeleted") Boolean isIncludeDeleted,
 			Pageable pageable
 	);
 
 	@Query(searchQuery)
-	List<KategoriTagihanDesa> listByAlamatDesaId(
-			@Param("q") String q,
-			@Param("alamatDesaId") Long alamatDesaId,
-			Pageable pageable
+	List<KategoriTagihanDesa> search (
+			@Param("q") String search,
+			@Param("isAktif") Boolean isAktif,
+			@Param("isIncludeDeleted") Boolean isIncludeDeleted
 	);
 }
