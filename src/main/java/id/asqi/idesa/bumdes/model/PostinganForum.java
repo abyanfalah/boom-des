@@ -31,6 +31,16 @@ public class PostinganForum {
 	@JoinColumn(name = "kategori_postingan_forum_bumdes_id")
 	private KategoriPostinganForumBumdes kategori;
 
+	@ManyToOne
+	@JoinColumn(name = "alamat_desa_id", nullable = false)
+	private AlamatDesa alamatDesa;
+
+	@NotNull
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "user_bumdes_id", nullable = false)
+	private UserBumdes userBumdes;
+
+
 	@OneToMany(mappedBy = "postinganForum")
 	private List<GambarPostinganForum> gambar;
 

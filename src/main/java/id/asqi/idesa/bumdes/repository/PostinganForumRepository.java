@@ -17,13 +17,17 @@ public interface PostinganForumRepository extends JpaRepository<PostinganForum, 
                 LOWER(p.judul) LIKE LOWER(CONCAT('%', :q, '%'))
             ))
             AND (:isIncludeDeleted = TRUE OR p.tanggalDihapus IS NULL)
+            AND (:alamatDesaId = IS NULL OR p.)
+            
             """;
 
 	@Query(searchQuery)
 	Page<PostinganForum> search(
 			@Param("q") String search,
 			@Param("isIncludeDeleted") Boolean isIncludeDeleted,
-		    Pageable pageable
+			@Param("alamatDesaId") Long alamatDesaId,
+			@Param("userBumdesId") Long userBumdesId,
+			Pageable pageable
 	);
 
 	@Query(searchQuery)

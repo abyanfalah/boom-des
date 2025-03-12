@@ -1,7 +1,7 @@
 package id.asqi.idesa.bumdes.service;
 
-
 import id.asqi.idesa.bumdes.core.Constants;
+import id.asqi.idesa.bumdes.core.auth.Auth;
 import id.asqi.idesa.bumdes.core.component.exception.NotFoundEntity;
 import id.asqi.idesa.bumdes.core.http.request.SearchPaginationRequest;
 import id.asqi.idesa.bumdes.core.http.request.SetDeleteStatusRequest;
@@ -9,7 +9,6 @@ import id.asqi.idesa.bumdes.core.service.S3Storage;
 import id.asqi.idesa.bumdes.enums.FolderName;
 import id.asqi.idesa.bumdes.http.request.PostinganForumRequest;
 import id.asqi.idesa.bumdes.model.GambarPostinganForum;
-import id.asqi.idesa.bumdes.model.GambarProdukGrosir;
 import id.asqi.idesa.bumdes.model.KategoriPostinganForumBumdes;
 import id.asqi.idesa.bumdes.model.PostinganForum;
 import id.asqi.idesa.bumdes.repository.GambarPostinganForumRepository;
@@ -32,8 +31,14 @@ public class PostinganForumService {
 	private final GambarPostinganForumRepository gambarPostinganForumRepository;
 	private final S3Storage s3Storage;
 
-	public Page<PostinganForum> getAll(SearchPaginationRequest req) {
-		return postinganForumRepository.search(req.getSearch(), req.getIsIncludeDeleted(), req.getPagination());
+	public Page<PostinganForum> getAll(PostinganForumRequest.Filter req) {
+		return postinganForumRepository.search(
+				req.getSearch(),
+				req.getIsIncludeDeleted(),
+				req.getAlamatDesaId(),
+				req.getUserBumdesId(),
+				req.getPagination()
+		);
 	}
 
 	public void create(PostinganForumRequest.Create req) throws Exception {
@@ -43,6 +48,8 @@ public class PostinganForumService {
 		e.setId(Constants.idGenerator());
 		e.setJudul(req.getJudul());
 		e.setIsi(req.getIsi());
+		e.setUserBumdes(Auth.getUserBumdes());
+		e.setAlamatDesa(Auth.getAlamatDesa());
 		e.setKategori(kategori);
 		e.setTanggalDibuat(LocalDateTime.now());
 		e = postinganForumRepository.save(e);

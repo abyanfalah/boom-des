@@ -25,7 +25,7 @@ public class PostinganForumController {
 	private final PostinganForumService postinganForumService;
 
 	@PostMapping("all")
-	public ResponseEntity<Response<Page<PostinganForum>>> getAll(@RequestBody @Valid SearchPaginationRequest req) {
+	public ResponseEntity<Response<Page<PostinganForum>>> getAll(@RequestBody @Valid PostinganForumRequest.Filter req) {
 		return CommonResponse.paginated(postinganForumService.getAll(req));
 	}
 	@PostMapping("create")

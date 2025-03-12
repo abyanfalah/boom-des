@@ -1,6 +1,7 @@
 package id.asqi.idesa.bumdes.http.request;
 
 import id.asqi.idesa.bumdes.core.http.request.IdNumberRequest;
+import id.asqi.idesa.bumdes.core.http.request.SearchPaginationRequest;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -35,5 +36,12 @@ public class PostinganForumRequest {
 		private Long kategoriId;
 		private List<MultipartFile> gambar;
 
+	}
+
+	@Getter
+	@Setter
+	public static class Filter extends SearchPaginationRequest {
+		private Long userBumdesId;
+		private Long alamatDesaId;
 	}
 }
