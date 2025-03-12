@@ -46,6 +46,10 @@ public class TagihanPenduduk {
 	@JoinColumn(name = "user_bumdes_id")
 	private UserBumdes userBumdes;
 
+	@ManyToOne
+	@JoinColumn(name = "alamat_desa_id", nullable = false)
+	private AlamatDesa alamatDesa;
+
 	@Column(name = "tanggal_dibuat")
 	private LocalDateTime tanggalDibuat;
 

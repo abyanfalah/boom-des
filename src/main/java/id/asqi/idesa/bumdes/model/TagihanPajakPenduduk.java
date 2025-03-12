@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -61,12 +62,17 @@ public class TagihanPajakPenduduk {
 	private Short status;
 
 	@ManyToOne
+	@JoinColumn(name = "alamat_desa_id", nullable = false)
+	private AlamatDesa alamatDesa;
+
+	@ManyToOne
 	@JoinColumn(name = "user_bumdes_id")
 	private UserBumdes userBumdes;
+
 	@Column(name = "tanggal_dibuat")
-	private java.time.LocalDateTime tanggalDibuat;
+	private LocalDateTime tanggalDibuat;
 
 	@Column(name = "tanggal_diubah")
-	private java.time.LocalDateTime tanggalDiubah;
+	private LocalDateTime tanggalDiubah;
 
 }

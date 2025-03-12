@@ -14,6 +14,10 @@ public class SearchPaginationRequest extends PaginationRequest {
 
 	private Boolean isIncludeDeleted;
 
+	public Boolean getIsIncludeDeleted(){
+		return isIncludeDeleted != null && isIncludeDeleted;
+	}
+
 	public String getSearch () {
 		return this.search == null ? "" : this.search.trim();
 	}

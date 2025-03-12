@@ -9,6 +9,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Entity
@@ -30,5 +32,12 @@ public class KategoriDasarTagihanDesa {
     @NotNull
     @Column(name = "is_pajak", nullable = false)
     private Boolean isPajak = false;
+
+    @NotNull
+    @Column(name = "is_aktif", nullable = false)
+    private Boolean isAktif = false;
+
+    @Column(name = "tanggal_dihapus")
+    private LocalDateTime tanggalDihapus;
 
 }
