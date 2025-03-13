@@ -72,7 +72,7 @@ public class PostinganForumService {
 
 	public void softDelete(SetDeleteStatusRequest req) {
 		PostinganForum e = findById(req.getId());
-		e.setTanggalDihapus(req.getIsDeleted() ? LocalDateTime.now() : null);
+		e.setTanggalDihapus(req.getIsDeletedAt());
 		postinganForumRepository.save(e);
 	}
 

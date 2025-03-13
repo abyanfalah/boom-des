@@ -1,17 +1,19 @@
 package id.asqi.idesa.bumdes.service;
 
 import id.asqi.idesa.bumdes.core.Constants;
+import id.asqi.idesa.bumdes.core.auth.Auth;
 import id.asqi.idesa.bumdes.core.component.exception.NotFoundEntity;
-import id.asqi.idesa.bumdes.core.http.request.IdNumberRequest;
-import id.asqi.idesa.bumdes.core.http.request.SearchBasicFiltersRequest;
-import id.asqi.idesa.bumdes.core.http.request.ToggleRequest;
+import id.asqi.idesa.bumdes.core.http.request.*;
 import id.asqi.idesa.bumdes.http.request.KategoriTagihanDesaRequest;
+import id.asqi.idesa.bumdes.model.KategoriDasarTagihanDesa;
 import id.asqi.idesa.bumdes.model.KategoriTagihanDesa;
+import id.asqi.idesa.bumdes.repository.KategoriDasarTagihanDesaRepository;
 import id.asqi.idesa.bumdes.repository.KategoriTagihanDesaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -19,12 +21,17 @@ import java.util.List;
 public class KategoriTagihanDesaService {
 
 	private final KategoriTagihanDesaRepository kategoriTagihanDesaRepository;
+	private final KategoriDasarTagihanDesaRepository kategoriDasarTagihanDesaRepository;
 
-	public Page<KategoriTagihanDesa> getAll(KategoriTagihanDesaRequest.Filter req) {
+	public Page<KategoriTagihanDesa> getAll(SearchPaginationRequest req) {
+//		Long asdf = Auth
+
 		return kategoriTagihanDesaRepository.search(
 				req.getSearch(),
 				req.getIsAktif(),
 				req.getIsIncludeDeleted(),
+//				Auth.getAlamatDesaId(),
+				null,
 				req.getPagination()
 		);
 	}
@@ -33,42 +40,76 @@ public class KategoriTagihanDesaService {
 		return kategoriTagihanDesaRepository.search(
 				req.getSearch(),
 				null,
-				false
+				false,
+				Auth.getAlamatDesaId()
 		);
 	}
 
 	public void create(KategoriTagihanDesaRequest.Create req) {
 		KategoriTagihanDesa e = new KategoriTagihanDesa();
+		KategoriDasarTagihanDesa kategoriDasar = this.findKategoriById(req.getKategoriDasarTagihanDesaId());
+
 		e.setId(Constants.idGenerator());
+		e.setKategoriDasarTagihanDesa(kategoriDasar);
 		e.setNama(req.getNama());
-		e.setIsPajak(req.getIsPajak());
-		e.setSiklusBayar(req.getSiklusBayar());
-		e.setIsAktif(true);
+		e.setNominalTagihanBulanan(req.getNominalTagihanBulanan());
+		e.setBiayaAdminAplikasi(req.getBiayaAdminAplikasi());
+		e.setBiayaAdminPengguna(req.getBiayaAdminPengguna());
+		e.setBiayaAdminMitraBumdes(req.getBiayaAdminMitraBumdes());
+		e.setDenda(req.getDenda());
+		e.setSatuanDenda(req.getSatuanDenda());
+		e.setTanggalPenagihan(req.getTanggalPenagihan());
+		e.setUserBumdes(Auth.getUserBumdes());
+		e.setAlamatDesa(Auth.getAlamatDesa());
+		e.setTanggalJatuhTempo(req.getTanggalJatuhTempo());
+		e.setTanggalPenagihan(req.getTanggalPenagihan());
+
+
+		e.setIsAktif(req.getIsAktif());
+		e.setTanggalDibuat(LocalDateTime.now());
 		kategoriTagihanDesaRepository.save(e);
 	}
 
 	public void update(KategoriTagihanDesaRequest.Update req) {
 		KategoriTagihanDesa e = this.findById(req.getId());
+		KategoriDasarTagihanDesa kategoriDasar = this.findKategoriById(req.getKategoriDasarTagihanDesaId());
+
+		e.setKategoriDasarTagihanDesa(kategoriDasar);
 		e.setNama(req.getNama());
-		e.setIsPajak(req.getIsPajak());
-		e.setSiklusBayar(req.getSiklusBayar());
+		e.setNominalTagihanBulanan(req.getNominalTagihanBulanan());
+		e.setBiayaAdminAplikasi(req.getBiayaAdminAplikasi());
+		e.setBiayaAdminPengguna(req.getBiayaAdminPengguna());
+		e.setBiayaAdminMitraBumdes(req.getBiayaAdminMitraBumdes());
+		e.setDenda(req.getDenda());
+		e.setSatuanDenda(req.getSatuanDenda());
+		e.setTanggalPenagihan(req.getTanggalPenagihan());
+		e.setUserBumdes(Auth.getUserBumdes());
+		e.setAlamatDesa(Auth.getAlamatDesa());
+		e.setTanggalJatuhTempo(req.getTanggalJatuhTempo());
+		e.setTanggalPenagihan(req.getTanggalPenagihan());
+
 		e.setIsAktif(req.getIsAktif());
+		e.setTanggalDibuat(LocalDateTime.now());
 		kategoriTagihanDesaRepository.save(e);
 	}
 
-	public void delete(IdNumberRequest req) {
+	public void delete(SetDeleteStatusRequest req) {
 		KategoriTagihanDesa e = this.findById(req.getId());
-		kategoriTagihanDesaRepository.delete(e);
+		e.setTanggalDihapus(req.getIsDeletedAt());
+		kategoriTagihanDesaRepository.save(e);
 	}
 
 	public void toggleStatus (ToggleRequest.AktifStatus req) {
 		KategoriTagihanDesa e = this.findById(req.getId());
 		e.setIsAktif(req.getIsAktif());
 		kategoriTagihanDesaRepository.save(e);
-
 	}
 
 	private KategoriTagihanDesa findById(Long id){
 		return kategoriTagihanDesaRepository.findById(id).orElseThrow(() -> new NotFoundEntity(KategoriTagihanDesa.class));
+	}
+
+	private KategoriDasarTagihanDesa findKategoriById(Long id){
+		return kategoriDasarTagihanDesaRepository.findById(id).orElseThrow(() -> new NotFoundEntity(KategoriDasarTagihanDesa.class));
 	}
 }

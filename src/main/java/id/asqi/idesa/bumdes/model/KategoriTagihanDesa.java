@@ -62,10 +62,6 @@ public class KategoriTagihanDesa {
     private Short tanggalJatuhTempo;
 
     @NotNull
-    @Column(name = "harga_per_satuan", nullable = false)
-    private BigDecimal hargaPerSatuan;
-
-    @NotNull
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_bumdes_id", nullable = false)
     private UserBumdes userBumdes;
@@ -79,7 +75,7 @@ public class KategoriTagihanDesa {
     private LocalDateTime tanggalDibuat;
 
     @Column(name = "tanggal_diubah")
-    private Instant tanggalDiubah;
+    private LocalDateTime tanggalDiubah;
 
     @NotNull
     @Column(name = "is_aktif", nullable = false)
