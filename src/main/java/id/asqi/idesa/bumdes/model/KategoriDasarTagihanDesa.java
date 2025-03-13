@@ -39,5 +39,4 @@ public class KategoriDasarTagihanDesa {
 
     @Column(name = "tanggal_dihapus")
     private LocalDateTime tanggalDihapus;
-
 }

@@ -44,6 +44,14 @@ public class KategoriTagihanDesaRequest {
 
 		@NotNull
 		private Boolean isAktif;
+
+		private Long satuanId;
+
+		private BigDecimal hargaPerSatuan;
+
+		@NotNull
+		@Range(min = 1, max = 2, message = "1 = Bulanan; 2 = Per-pemakaian")
+		private Short jenisPenagihan;
 	}
 
 	@Getter
@@ -80,5 +88,14 @@ public class KategoriTagihanDesaRequest {
 
 		@NotNull
 		private Boolean isAktif;
+
+		private Long satuanId;
+
+		private BigDecimal hargaPerSatuan;
+
+		@NotNull
+		@Range(min = 1, max = 2, message = "1 = Bulanan; 2 = Per-pemakaian")
+		private Short jenisPenagihan;
+
 	}
 }

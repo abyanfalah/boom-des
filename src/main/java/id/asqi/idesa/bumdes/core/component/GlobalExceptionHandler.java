@@ -89,7 +89,6 @@ public class GlobalExceptionHandler {
 		return CommonResponse.serverError(e.getMessage());
 	}
 
-
 	@ExceptionHandler(NoResourceFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public ResponseEntity<?> NoResourceFoundExceptionHandler (NoResourceFoundException e) {

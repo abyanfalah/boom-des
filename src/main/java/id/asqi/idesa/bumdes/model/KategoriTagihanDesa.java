@@ -1,5 +1,6 @@
 package id.asqi.idesa.bumdes.model;
 
+import id.asqi.idesa.bumdes.enums.JenisPenagihan;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -29,8 +30,7 @@ public class KategoriTagihanDesa {
     @Column(name = "nama", nullable = false)
     private String nama;
 
-    @NotNull
-    @Column(name = "nominal_tagihan_bulanan", nullable = false)
+    @Column(name = "nominal_tagihan_bulanan")
     private BigDecimal nominalTagihanBulanan;
 
     @NotNull
@@ -70,6 +70,13 @@ public class KategoriTagihanDesa {
     @JoinColumn(name = "alamat_desa_id", nullable = false)
     private AlamatDesa alamatDesa;
 
+    @ManyToOne
+    @JoinColumn(name = "satuan_id")
+    private Satuan satuan;
+
+    @Column(name = "harga_per_satuan")
+    private BigDecimal hargaPerSatuan;
+
     @NotNull
     @Column(name = "tanggal_dibuat", nullable = false)
     private LocalDateTime tanggalDibuat;
@@ -81,6 +88,18 @@ public class KategoriTagihanDesa {
     @Column(name = "is_aktif", nullable = false)
     private Boolean isAktif = false;
 
+    @NotNull
+    @Column(name = "jenis_penagihan", nullable = false)
+    private Short jenisPenagihan;
+
     @Column(name = "tanggal_dihapus")
     private LocalDateTime tanggalDihapus;
+
+    public Boolean getIsPajak(){
+        return this.kategoriDasarTagihanDesa.getIsPajak();
+    }
+
+    public String getJenisPenagihanLabel(){
+        return JenisPenagihan.getString(this.jenisPenagihan);
+    }
 }
