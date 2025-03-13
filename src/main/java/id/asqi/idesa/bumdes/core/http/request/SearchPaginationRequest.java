@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 public class SearchPaginationRequest extends PaginationRequest {
 	private String search = "";
 
-	private Boolean isAktif;
+	private Boolean isAktif; // DO NOT make custom getter for this field!
 
 	private Boolean isIncludeDeleted;
 
@@ -25,4 +25,6 @@ public class SearchPaginationRequest extends PaginationRequest {
 	public Pageable getPagination(){
 		return MyPagination.paginate(this);
 	}
+
+
 }
