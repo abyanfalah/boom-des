@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -25,5 +27,18 @@ public class Penduduk {
     @ManyToOne
     @JoinColumn(name = "alamat_desa_id", nullable = false)
     private AlamatDesa alamatDesa;
+
+    @ManyToMany
+    @JoinTable(
+            name = "mapping_penduduk_kategori_tagihan",
+            joinColumns = @JoinColumn(
+                    name = "penduduk_id", referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "kategori_tagihan_desa_id", referencedColumnName = "id"
+            )
+    )
+    private List<KategoriTagihanDesa> kategoriTagihanAktif;
+
 
 }
