@@ -6,10 +6,13 @@ import id.asqi.idesa.bumdes.core.component.exception.NotFoundEntity;
 import id.asqi.idesa.bumdes.core.component.logging.ErrorLogger;
 import id.asqi.idesa.bumdes.core.http.CommonResponse;
 import id.asqi.idesa.bumdes.core.service.EnvService;
+import jakarta.persistence.RollbackException;
+import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -57,6 +60,35 @@ public class GlobalExceptionHandler {
 		e.printStackTrace();
 		return CommonResponse.serverError(e.getMessage());
 	}
+
+	@ExceptionHandler(ConstraintViolationException.class)
+	public ResponseEntity<?> constraintViolationExceptionHandler (ConstraintViolationException e) {
+		ErrorLogger.printFilteredStackTrace(e, this.getClass().getPackageName());
+		return CommonResponse.serverError(e.getMessage());
+	}
+
+
+
+	@ExceptionHandler(TransactionSystemException.class)
+	public ResponseEntity<?> transactionSystemExceptionHandler(TransactionSystemException ex) {
+		Throwable cause = ex;
+		while (cause != null) {
+			if (cause instanceof ConstraintViolationException constraintViolation) {
+				ErrorLogger.printFilteredStackTrace(constraintViolation, this.getClass().getPackageName());
+				return CommonResponse.serverError(constraintViolation.getMessage());
+			}
+			cause = cause.getCause();
+		}
+
+		ErrorLogger.printFilteredStackTrace(ex, this.getClass().getPackageName());
+		return CommonResponse.serverError("Transaction error occurred."); // Or more specific message
+	}
+	@ExceptionHandler(RollbackException.class)
+	public ResponseEntity<?> rollbackExceptionHandler (RollbackException e) {
+		ErrorLogger.printFilteredStackTrace(e, this.getClass().getPackageName());
+		return CommonResponse.serverError(e.getMessage());
+	}
+
 
 	@ExceptionHandler(NoResourceFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
