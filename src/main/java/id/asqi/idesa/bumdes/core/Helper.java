@@ -140,5 +140,16 @@ public class Helper {
 		}
 	}
 
+	public static String generateRandomNik() {
+		Random random = new Random();
+		StringBuilder nik = new StringBuilder();
+
+		for (int i = 0; i < 16; i++) {
+			nik.append(random.nextInt(10)); // Generates a random digit (0-9)
+		}
+
+		return nik.toString();
+	}
+
 
 }

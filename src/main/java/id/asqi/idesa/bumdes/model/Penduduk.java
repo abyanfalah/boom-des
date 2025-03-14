@@ -1,10 +1,13 @@
 package id.asqi.idesa.bumdes.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -25,20 +28,16 @@ public class Penduduk {
     private String nama;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "alamat_desa_id", nullable = false)
     private AlamatDesa alamatDesa;
 
-    @ManyToMany
-    @JoinTable(
-            name = "mapping_penduduk_kategori_tagihan",
-            joinColumns = @JoinColumn(
-                    name = "penduduk_id", referencedColumnName = "id"
-            ),
-            inverseJoinColumns = @JoinColumn(
-                    name = "kategori_tagihan_desa_id", referencedColumnName = "id"
-            )
-    )
-    private List<KategoriTagihanDesa> kategoriTagihanAktif;
-
-
+//    @Column(name = "tanggal_dibuat", nullable = false)
+//    private LocalDateTime tanggalDibuat;
+//
+//    @Column(name = "tanggal_diubah")
+//    private LocalDateTime tanggalDiubah;
+//
+//    @Column(name = "tanggal_dihapus")
+//    private LocalDateTime tanggalDihapus;
 }

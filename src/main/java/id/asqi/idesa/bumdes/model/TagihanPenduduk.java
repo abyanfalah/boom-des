@@ -55,7 +55,4 @@ public class TagihanPenduduk {
 
 	@Column(name = "tanggal_diubah")
 	private LocalDateTime tanggalDiubah;
-
-
-
 }

@@ -1,5 +1,6 @@
 package id.asqi.idesa.bumdes.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import id.asqi.idesa.bumdes.enums.JenisPenagihan;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -63,10 +64,12 @@ public class KategoriTagihanDesa {
 
     @NotNull
     @ManyToOne(optional = false)
+    @JsonBackReference
     @JoinColumn(name = "user_bumdes_id", nullable = false)
     private UserBumdes userBumdes;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "alamat_desa_id", nullable = false)
     private AlamatDesa alamatDesa;
 

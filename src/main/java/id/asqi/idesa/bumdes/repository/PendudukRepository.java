@@ -13,7 +13,7 @@ public interface PendudukRepository extends JpaRepository<Penduduk, Long> {
 			WHERE (:q = '' OR (
 				LOWER(e.nik) LIKE LOWER(CONCAT('%', :q, '%'))
 				OR LOWER(e.nama) LIKE LOWER(CONCAT('%', :q, '%'))
-							))
+			))
 			""")
 	Page<Penduduk> search(
 			@Param("q") String search,

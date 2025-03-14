@@ -11,17 +11,21 @@ public interface TagihanPendudukRepository extends JpaRepository<TagihanPenduduk
 
 	String searchQuery = """
 			SELECT tp FROM TagihanPenduduk tp
-			WHERE (:alamatDesaId IS NULL OR tp.penduduk.alamatDesa.id = :alamatDesaId)
-			AND (:pendudukId IS NULL OR tp.penduduk.id = :pendudukId)
-			AND (:q = '' OR
+			WHERE (:q = '' OR
 				LOWER(tp.penduduk.nama) LIKE LOWER(concat('%', :q, '%'))
 			)
+			AND (:alamatDesaId IS NULL OR tp.penduduk.alamatDesa.id = :alamatDesaId)
+			AND (:pendudukId IS NULL OR tp.penduduk.id = :pendudukId)
+			AND (:kategoriTagihanId IS NULL OR tp.kategoriTagihanDesa.id = :kategoriTagihanId)
+			
 			""";
 
 	@Query(searchQuery)
-	Page<TagihanPenduduk> findByPendudukIdAndAlamatDesaId (
+	Page<TagihanPenduduk> search (
+			@Param("q") String search,
 			@Param("alamatDesaId") Long alamatDesaId,
 			@Param("pendudukId") Long pendudukId,
+			@Param("kategoriTagihanId") Long kategoriTagihanId,
 			Pageable pageable
 	);
 }

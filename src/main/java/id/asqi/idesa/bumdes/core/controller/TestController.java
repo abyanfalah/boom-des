@@ -1,14 +1,17 @@
 package id.asqi.idesa.bumdes.core.controller;
 
 import id.asqi.idesa.bumdes.core.Constants;
+import id.asqi.idesa.bumdes.core.Helper;
 import id.asqi.idesa.bumdes.core.auth.Auth;
 import id.asqi.idesa.bumdes.core.auth.UserDetailsImpl;
 import id.asqi.idesa.bumdes.core.http.CommonResponse;
 import id.asqi.idesa.bumdes.model.AlamatDesa;
 import id.asqi.idesa.bumdes.model.Jabatan;
+import id.asqi.idesa.bumdes.model.Penduduk;
 import id.asqi.idesa.bumdes.model.UserBumdes;
 import id.asqi.idesa.bumdes.repository.AlamatDesaRepository;
 import id.asqi.idesa.bumdes.repository.JabatanRepository;
+import id.asqi.idesa.bumdes.repository.PendudukRepository;
 import id.asqi.idesa.bumdes.repository.UserBumdesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,6 +32,7 @@ public class TestController {
 	private final PasswordEncoder passwordEncoder;
 	private final AlamatDesaRepository alamatDesaRepository;
 	private final JabatanRepository jabatanRepository;
+	private final PendudukRepository pendudukRepository;
 
 	@GetMapping
 	public Object test (
@@ -86,6 +90,21 @@ public class TestController {
 				ub,
 				"Password -> '1234'"
 		);
+	}
+
+	@GetMapping("generate-penduduk")
+	public Object generatePenduduk () {
+		long count = pendudukRepository.count();
+		String username = "penduduk" + (count + 1);
+
+		AlamatDesa alamatDesa = alamatDesaRepository.findById(3203012001L).get();
+
+		Penduduk p = new Penduduk();
+		p.setId(Constants.idGenerator());
+		p.setNik(Helper.generateRandomNik());
+		p.setNama(username);
+		p.setAlamatDesa(alamatDesa);
+		return pendudukRepository.save(p);
 	}
 
 	public void testAuthentication () {
