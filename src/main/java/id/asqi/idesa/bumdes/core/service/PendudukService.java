@@ -43,7 +43,7 @@ public class PendudukService {
 		pendudukRepository.save(penduduk);
 	}
 
-	public Penduduk findById(Long id) {
+	private Penduduk findById(Long id) {
 		return pendudukRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Penduduk not found"));
 	}

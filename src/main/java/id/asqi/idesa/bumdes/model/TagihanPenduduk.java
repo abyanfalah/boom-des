@@ -1,5 +1,7 @@
 package id.asqi.idesa.bumdes.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import id.asqi.idesa.bumdes.enums.StatusTagihanPenduduk;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,14 +41,18 @@ public class TagihanPenduduk {
 	@Column(name = "total_tagihan")
 	private BigDecimal totalTagihan;
 
+	// TODO: add total tagihan yang harus dibayar. (tagihan after potongan)
+
 	@Column(name = "status")
-	private Short status;
+	private Short status = StatusTagihanPenduduk.BELUM_LUNAS;
 
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "user_bumdes_id")
 	private UserBumdes userBumdes;
 
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "alamat_desa_id", nullable = false)
 	private AlamatDesa alamatDesa;
 
@@ -55,4 +61,11 @@ public class TagihanPenduduk {
 
 	@Column(name = "tanggal_diubah")
 	private LocalDateTime tanggalDiubah;
+
+	@Column(name = "tanggal_dihapus")
+	private LocalDateTime tanggalDihapus;
+
+	@ManyToOne
+	@JoinColumn(name = "mapping_tagihan_penduduk_id")
+	private MappingTagihanPenduduk mappingTagihan;
 }

@@ -10,6 +10,9 @@ import java.time.LocalDateTime;
 public class SetDeleteStatusRequest extends IdNumberRequest{
 	private Boolean isDeleted = true;
 
+	/*will be used for had deletion*/
+	private Boolean isHardAf = false;
+
 	public Boolean getIsDeleted(){
 		return isDeleted == null || isDeleted;
 	}
