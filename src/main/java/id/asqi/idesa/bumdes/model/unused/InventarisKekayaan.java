@@ -1,6 +1,5 @@
 package id.asqi.idesa.bumdes.model.unused;
 
-import id.asqi.idesa.bumdes.model.Kelompok;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;

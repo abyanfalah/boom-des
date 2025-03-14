@@ -1,4 +1,4 @@
-package id.asqi.idesa.bumdes.model;
+package id.asqi.idesa.bumdes.model.unused;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
